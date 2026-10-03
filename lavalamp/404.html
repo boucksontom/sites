@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Lampe Lave Efx</title>
+
+<link href="logo_xeno.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+
+body {
+  margin: 0px;
+  background-color: rgba(0,0,0,.1);
+}
+
+/*
+  GLUANT EFX
+*/
+.lavalamp, .lavalamp div {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+.lavalamp {
+  height: 300px;
+  width: 100px;
+  left: 50%;
+  top: 50%;
+  border-radius: 100%;
+  transform: translate(-50%, -50%);
+}
+.lavalamp .lavalamp_content {
+  height: 100%;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.lavalamp .lavalamp_content .lavalamp_bulles {
+  height: auto;
+  width: 100%;
+  left: 0px;
+  top: -70px;
+  bottom: -70px;
+  filter:url("#gluant_efx");
+}
+.lavalamp .lavalamp_content .lavalamp_bulles:after,
+.lavalamp .lavalamp_content .lavalamp_bulles:before {
+  position: absolute;
+  display: block;
+  content: ' ';
+  height: 80px;
+  width: 140%;
+  left: -20%;
+  border-radius: 50%;
+}
+.lavalamp .lavalamp_content .lavalamp_bulles:after { top: -7px; }
+.lavalamp .lavalamp_content .lavalamp_bulles:before { bottom: 0px; }
+/* BULLES */
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle {
+  height: 100%;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+}
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle div {
+  position: absolute;
+  content: ' ';
+  height: 0px;
+  width: 0px;
+  padding: 30%;
+  border-radius: 50%;
+  pointer-events: auto;
+  transition: .1s;
+}
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle.top, .lavalamp .lavalamp_content .lavalamp_bulles .bulle.top div { top: 0px; }
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle.bottom, .lavalamp .lavalamp_content .lavalamp_bulles .bulle.bottom div { bottom: 0px; }
+/* SIZES */
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle:nth-child(1) div { padding: 30%; }
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle:nth-child(2) div { padding: 40%; }
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle:nth-child(3) div { padding: 25%; }
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle:nth-child(4) div { padding: 35%; }
+/* COLOR DEFAULT */
+.lavalamp .lavalamp_content { background-color: #fff; }
+.lavalamp .lavalamp_content .lavalamp_bulles:after,
+.lavalamp .lavalamp_content .lavalamp_bulles:before,
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle div { background-color: #60696e; }
+
+
+/*
+  ANIMATION
+*/
+.lavalamp.anim .bulle:nth-child(1) { animation: anim_bulle_1 21s ease-in infinite; }
+.lavalamp.anim .bulle:nth-child(2) { animation: anim_bulle_2 27s ease-in infinite; }
+.lavalamp.anim .bulle:nth-child(3) { animation: anim_bulle_3 24s ease-in infinite; }
+.lavalamp.anim .bulle:nth-child(4) { animation: anim_bulle_4 18s ease-in infinite; }
+.lavalamp.anim .bulle.top { animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715); }
+.lavalamp.anim .bulle.bottom { animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1); }
+/**/
+@keyframes anim_bulle_1 {
+  0% { transform: translate(0px, 0px); }
+  50% { transform: translate(20px, 100%); }
+}
+@keyframes anim_bulle_2 {
+  0% { transform: translate(0px, 0px); }
+  50% { transform: translate(0px, -100%); }
+}
+@keyframes anim_bulle_3 {
+  50% { transform: translate(0px, 0px); }
+  100% { transform: translate(20px, 100%); }
+}
+@keyframes anim_bulle_4 {
+  50% { transform: translate(0px, 0px); }
+  100% { transform: translate(0px, -100%); }
+}
+
+
+/* ANIM FORME BULLES */
+.lavalamp.anim_forme .lavalamp_content .lavalamp_bulles .bulle div:after {
+  position: absolute;
+  display: block;
+  content: ' ';
+  height: 80%;
+  width: 80%;
+  left: 10%;
+  top: 10%;
+  border-radius: 50%;
+  background: inherit;
+  background-color: inherit;
+  filter: blur(5px);
+}
+.lavalamp.anim.anim_forme .lavalamp_content .lavalamp_bulles .bulle:nth-child(1) div:after { animation: anim_forme_bulle_1 5s infinite alternate; }
+.lavalamp.anim.anim_forme .lavalamp_content .lavalamp_bulles .bulle:nth-child(2) div:after { animation: anim_forme_bulle_2 5s infinite alternate; }
+.lavalamp.anim.anim_forme .lavalamp_content .lavalamp_bulles .bulle:nth-child(3) div:after { animation: anim_forme_bulle_1 5s infinite alternate; }
+.lavalamp.anim.anim_forme .lavalamp_content .lavalamp_bulles .bulle:nth-child(4) div:after { animation: anim_forme_bulle_2 5s infinite alternate; }
+/**/
+@keyframes anim_forme_bulle_1 {
+  0% { transform: translate(15%, 15%); }
+  50% { transform: translate(0%, 0%) scaleY(1.5); }
+  100% { transform: translate(-15%, -15%); }
+}
+@keyframes anim_forme_bulle_2 {
+  0% { transform: translate(8%, -15%); }
+  100% { transform: translate(5%, 20%); }
+}
+
+</style>
+
+<style type="text/css">
+
+/* --- / PARAM SUPPLEMENTAIRES / ---*/
+/* COLOR */
+.lavalamp.color_1 .lavalamp_content { background-color: #333; /*box-shadow: 10px 0px 15px 0px rgba(0,0,0,0.5);*/ }
+.lavalamp.color_1 .lavalamp_content .lavalamp_bulles:after,
+.lavalamp.color_1 .lavalamp_content .lavalamp_bulles:before,
+.lavalamp.color_1 .lavalamp_content .lavalamp_bulles .bulle div { background-color: #fff; }
+
+.lavalamp.color_1.socle:before,
+.lavalamp.color_1 .lavalamp_content:after,
+.lavalamp.color_1 .lavalamp_content:before { background-image: linear-gradient(315deg, #222 0%, #999 94%) !important; }
+
+.lavalamp.color_2 .lavalamp_content {
+  background: linear-gradient(125deg, rgba(153,218,255,1) 0%, rgba(0,128,128,1) 100%);
+}
+.lavalamp.color_2 .lavalamp_content .lavalamp_bulles:after,
+.lavalamp.color_2 .lavalamp_content .lavalamp_bulles:before,
+.lavalamp.color_2 .lavalamp_content .lavalamp_bulles .bulle div {
+  background-color: #f7b42c;
+  background-image: linear-gradient(315deg, #f7b42c 0%, #fc575e 74%);
+}
+.lavalamp.color_2.socle:before,
+.lavalamp.color_2 .lavalamp_content:after,
+.lavalamp.color_2 .lavalamp_content:before { background-image: linear-gradient(315deg, #20819b 0%, #b7aea3 94%) !important; }
+
+.lavalamp.color_3 .lavalamp_content { background-color: #fff; }
+.lavalamp.color_3 .lavalamp_content .lavalamp_bulles:after,
+.lavalamp.color_3 .lavalamp_content .lavalamp_bulles:before,
+.lavalamp.color_3 .lavalamp_content .lavalamp_bulles .bulle div { background-color: #d2ff0b; }
+
+/* CHAPEAU & SOCLE */
+.lavalamp.socle:before {
+  position: absolute;
+  display: block;
+  content: ' ';
+  height: 10%;
+  width: 80%;
+  left: 10%;
+  top: 95%;
+  border-radius: 50%;
+  background-image: linear-gradient(315deg, #2f4353 0%, #d2ccc4 94%);
+}
+.lavalamp.socle .lavalamp_content:after,
+.lavalamp.socle .lavalamp_content:before {
+  position: absolute;
+  display: block;
+  content: ' ';
+  height: 24%;
+  width: 100%;
+  left: 0px;
+  border-radius: 50%;
+  background-color: #2f4353;
+  background-image: linear-gradient(315deg, #2f4353 0%, #d2ccc4 94%);
+  z-index: 10;
+}
+.lavalamp.socle .lavalamp_content:before { top: -8%; }
+.lavalamp.socle .lavalamp_content:after {   bottom: -8%; }
+.lavalamp.socle .lavalamp_content .lavalamp_bulles:after,
+.lavalamp.socle .lavalamp_content .lavalamp_bulles:before { width: 100%; left: 0%; }
+.lavalamp.socle .lavalamp_content .lavalamp_bulles:after { top: 40px; }
+.lavalamp.socle .lavalamp_content .lavalamp_bulles:before { bottom: 40px; }
+
+
+/* backgrounds */
+.lavalamp:before {
+  position: fixed;
+  display: block;
+  content: ' ';
+  height: 100%;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+}
+.lavalamp.bg_red:before { background-color: red; }
+.lavalamp.bg_green:before { background-color: green; }
+.lavalamp.bg_blue:before { background-color: blue; }
+.lavalamp.bg_fff:before { background-color: #fff; }
+.lavalamp.bg_000:before { background-color: #000; }
+.lavalamp.bg_111:before { background-color: #111; }
+.lavalamp.bg_222:before { background-color: #222; }
+.lavalamp.bg_333:before { background-color: #333; }
+.lavalamp.bg_444:before { background-color: #444; }
+.lavalamp.bg_555:before { background-color: #555; }
+.lavalamp.bg_666:before { background-color: #666; }
+.lavalamp.bg_777:before { background-color: #777; }
+.lavalamp.bg_888:before { background-color: #888; }
+.lavalamp.bg_999:before { background-color: #999; }
+.lavalamp.bg_ececec:before { background-color: #ececec; }
+
+
+</style>
+
+<!-- CSS LOGO XENO -->
+<style type="text/css">
+
+.logo_xeno {
+  position: absolute;
+  display: block;
+  height: 7%;
+  width: 15%;
+  left: 0px;
+  bottom: 0px;
+  margin: 4%;
+  font-size: 0px;
+  text-align: center;
+}
+.logo_xeno:after {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  content: ' ';
+  height: 100%;
+  width: 1px;
+  margin-left: -1px;
+}
+.logo_xeno .container_logo {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  padding-top: 23.4869%;
+  padding-left: 100%;
+}
+.logo_xeno .container_logo .xeno_letter { position: absolute; display: block; height: 100%; top: 0px; }
+.logo_xeno .container_logo .xeno_letter.xeno_x { left: 0%; width: 23.5%; }
+.logo_xeno .container_logo .xeno_letter.xeno_e { left: 25.9%; width: 30%; }
+.logo_xeno .container_logo .xeno_letter.xeno_n { left: 50.8%; width: 23.4%; }
+.logo_xeno .container_logo .xeno_letter.xeno_o { left: 76.4%; width: 23.4%; }
+.logo_xeno .container_logo .xeno_letter div { position: absolute; transform-origin: center; border-radius: 5rem; overflow: hidden; }
+.logo_xeno .container_logo .xeno_letter div { background-color: #27C469; }
+
+/* xeno: X */
+.logo_xeno .container_logo .xeno_letter.xeno_x div { height: 22%; width: 132%; left: -16%; top: 0px; }
+.logo_xeno .container_logo .xeno_letter.xeno_x div:nth-child(1) { top: 39%; transform: rotate(45deg); }
+.logo_xeno .container_logo .xeno_letter.xeno_x div:nth-child(2) { top: 39%; transform: rotate(-45deg); }
+/* xeno: E */
+.logo_xeno .container_logo .xeno_letter.xeno_e div { width: 100%; height: 21%; left: 0%; }
+.logo_xeno .container_logo .xeno_letter.xeno_e div:nth-child(1) { top: 1.5%; width: 75%; }
+.logo_xeno .container_logo .xeno_letter.xeno_e div:nth-child(2) { top: 39.5%; width: 75%; }
+.logo_xeno .container_logo .xeno_letter.xeno_e div:nth-child(3) { top: 77.5%; }
+/* xeno: N */
+.logo_xeno .container_logo .xeno_letter.xeno_n div { left: 0%; width: 21.6%; height: 100%; }
+.logo_xeno .container_logo .xeno_letter.xeno_n div:nth-child(1) { top: .5%; height: 60%; }
+.logo_xeno .container_logo .xeno_letter.xeno_n div:nth-child(2) { top: -15.5%; left: 39%; width: 21.6%; height: 131%; transform: rotate(-45deg); }
+.logo_xeno .container_logo .xeno_letter.xeno_n div:nth-child(3) { left: 78%; top: .5%; height: 99%; }
+/* xeno: O */
+.logo_xeno .container_logo .xeno_letter.xeno_o div { width: 100%; height: 100%; left: 0%; top: 0%; border-radius: 50%; }
+.logo_xeno .container_logo .xeno_letter.xeno_o div:nth-child(1) {}
+.logo_xeno .container_logo .xeno_letter.xeno_o div:nth-child(2) { background-color: #fff; height: 59%; width: 59%; left: 20.5%; top: 20.5%; }
+
+</style>
+
+<style type="text/css">/* ANIM LOGO */
+/* ANIM_1 */
+#input_anim_logo_1:checked ~ .logo_xeno .container_logo .xeno_letter { animation: logo_xeno_anim_1 1s; }
+@keyframes logo_xeno_anim_1 {
+  0%   { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+
+/* ANIM_2 */
+#input_anim_logo_2:checked ~ .logo_xeno .container_logo .xeno_letter.xeno_x { animation: logo_xeno_anim_2 .5s .0s linear; }
+#input_anim_logo_2:checked ~ .logo_xeno .container_logo .xeno_letter.xeno_e { animation: logo_xeno_anim_2 .5s .2s linear; }
+#input_anim_logo_2:checked ~ .logo_xeno .container_logo .xeno_letter.xeno_n { animation: logo_xeno_anim_2 .5s .4s linear; }
+#input_anim_logo_2:checked ~ .logo_xeno .container_logo .xeno_letter.xeno_o { animation: logo_xeno_anim_2 .5s .6s linear; }
+@keyframes logo_xeno_anim_2 {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(.7); }
+  100% { transform: scale(1); }
+}
+
+/* ANIM_3 */
+#input_anim_logo_3:checked ~ .logo_xeno .container_logo .xeno_letter.xeno_x div:nth-child(1) { animation: logo_xeno_anim_3_x_1 5s .0s; }
+#input_anim_logo_3:checked ~ .logo_xeno .container_logo .xeno_letter.xeno_x div:nth-child(2) { animation: logo_xeno_anim_3_x_2 5s .0s; }
+#input_anim_logo_3:checked ~ .logo_xeno .container_logo .xeno_letter.xeno_e div:nth-child(1) { animation: logo_xeno_anim_3_e_1 5s .2s linear; }
+#input_anim_logo_3:checked ~ .logo_xeno .container_logo .xeno_letter.xeno_e div:nth-child(2) { animation: logo_xeno_anim_3_e_2 5s .2s linear; }
+#input_anim_logo_3:checked ~ .logo_xeno .container_logo .xeno_letter.xeno_e div:nth-child(3) { animation: logo_xeno_anim_3_e_3 5s .2s linear; }
+#input_anim_logo_3:checked ~ .logo_xeno .container_logo .xeno_letter.xeno_n { animation: logo_xeno_anim_3 5s .4s linear; }
+#input_anim_logo_3:checked ~ .logo_xeno .container_logo .xeno_letter.xeno_o { animation: logo_xeno_anim_3 5s .6s linear; }
+
+@keyframes logo_xeno_anim_3_x {
+  0%  { transform: rotate(-180deg); }
+  20% { transform: rotate(0deg); }
+}
+@keyframes logo_xeno_anim_3_x_1 {
+  0%  { transform: scaleX(0) rotate(45deg); }
+  8%  { transform: scaleX(.7) rotate(-45deg); }
+  20% { transform: scaleX(1) rotate(45deg); }
+}
+@keyframes logo_xeno_anim_3_x_2 {
+  0%  { transform: scaleY(0) rotate(-45deg); }
+  12% { transform: scaleY(.7) rotate(45deg); }
+  20% { transform: scaleY(1) rotate(-45deg); }
+}
+@keyframes logo_xeno_anim_3_e_1 {
+  0%  { transform: scale(0); }
+  30% { transform: scale(.7); }
+  100%{ transform: scale(1); }
+}
+@keyframes logo_xeno_anim_3_e_2 {
+  0%  { transform: scale(0); }
+  30% { transform: scale(.7); }
+  100%{ transform: scale(1); }
+}
+@keyframes logo_xeno_anim_3_e_3 {
+  0%  { transform: scale(0); }
+  30% { transform: scale(.7); }
+  100%{ transform: scale(1); }
+}
+
+/*
+  COLORS
+*/
+.logo_xeno.color_000 .container_logo .xeno_letter div { background-color: #000; }
+.logo_xeno.color_111 .container_logo .xeno_letter div { background-color: #111; }
+.logo_xeno.color_222 .container_logo .xeno_letter div { background-color: #222; }
+.logo_xeno.color_333 .container_logo .xeno_letter div { background-color: #333; }
+.logo_xeno.color_444 .container_logo .xeno_letter div { background-color: #444; }
+.logo_xeno.color_555 .container_logo .xeno_letter div { background-color: #555; }
+.logo_xeno.color_666 .container_logo .xeno_letter div { background-color: #666; }
+.logo_xeno.color_777 .container_logo .xeno_letter div { background-color: #777; }
+.logo_xeno.color_888 .container_logo .xeno_letter div { background-color: #888; }
+.logo_xeno.color_999 .container_logo .xeno_letter div { background-color: #999; }
+.logo_xeno.color_fff .container_logo .xeno_letter div { background-color: #fff; }
+.logo_xeno.color_ebebeb .container_logo .xeno_letter div { background-color: #ebebeb; }
+
+
+
+
+/*
+  ANIMS
+*/
+.logo_xeno.anim_1 .container_logo .xeno_letter.xeno_e div { transform-origin: left; }
+/*.logo_xeno.anim_1 .container_logo .xeno_letter.xeno_x div:nth-child(1) { transform-origin: top left; }*/
+/*.logo_xeno.anim_1 .container_logo .xeno_letter.xeno_x div:nth-child(2) { transform-origin: bottom right; }*/
+.logo_xeno.anim_1 .container_logo .xeno_letter.xeno_x { animation: logo_xeno_anim1_x 50s 0s ease infinite; }
+/*.logo_xeno.anim_1 .container_logo .xeno_letter.xeno_x div:nth-child(1) { animation: logo_xeno_anim1_x1 50s 0s ease infinite; }
+.logo_xeno.anim_1 .container_logo .xeno_letter.xeno_x div:nth-child(2) { animation: logo_xeno_anim1_x2 50s 0s ease infinite; }*/
+
+.logo_xeno.anim_1 .container_logo .xeno_letter.xeno_e div:nth-child(1) { animation: logo_xeno_anim1_e1 50s 0s ease infinite; }
+.logo_xeno.anim_1 .container_logo .xeno_letter.xeno_e div:nth-child(2) { animation: logo_xeno_anim1_e2 50s 0s ease infinite; }
+.logo_xeno.anim_1 .container_logo .xeno_letter.xeno_e div:nth-child(3) { animation: logo_xeno_anim1_e3 50s 0s ease infinite; }
+
+.logo_xeno.anim_1 .container_logo .xeno_letter.xeno_n div:nth-child(2) { transform-origin: top right; left: -10.3%; top: -3.8%; }
+.logo_xeno.anim_1 .container_logo .xeno_letter.xeno_n div:nth-child(1) { animation: logo_xeno_anim1_n1 50s 0s ease infinite; }
+.logo_xeno.anim_1 .container_logo .xeno_letter.xeno_n div:nth-child(2) { animation: logo_xeno_anim1_n2 50s 0s ease infinite; }
+.logo_xeno.anim_1 .container_logo .xeno_letter.xeno_n div:nth-child(3) { animation: logo_xeno_anim1_n3 50s 0s ease infinite; }
+
+.logo_xeno.anim_1 .container_logo .xeno_letter.xeno_o { animation: logo_xeno_anim1_o 50s 0s ease infinite; }
+
+/* X */
+@keyframes logo_xeno_anim1_x {
+  0%  { transform: scale(0) rotate(-720deg); }
+  4% { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+/* E */
+@keyframes logo_xeno_anim1_e {
+  0%  { transform: scale(0); }
+  3% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+@keyframes logo_xeno_anim1_e1 {
+  0%  { transform: scale(0); }
+  3% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+@keyframes logo_xeno_anim1_e2 {
+  3%  { transform: scale(0); }
+  3.3% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+@keyframes logo_xeno_anim1_e3 {
+  .6%  { transform: scale(0); }
+  3.6% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+/* N */
+@keyframes logo_xeno_anim1_n {
+  1.5%  { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+@keyframes logo_xeno_anim1_n1 {
+  1.5%  { transform: scale(0); }
+  4.5% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+@keyframes logo_xeno_anim1_n2 {
+  2%  { transform: scale(0) rotate(-45deg); }
+  5% { transform: scale(1) rotate(-45deg); }
+  100% { transform: scale(1) rotate(-45deg); }
+}
+@keyframes logo_xeno_anim1_n3 {
+  2.5%  { transform: scale(0); }
+  5.5% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+/* O */
+@keyframes logo_xeno_anim1_o {
+  0%  { transform: scale(0); }
+  5% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+</style>
+
+<style type="text/css">
+
+/*
+  MODELS
+*/
+.lavalamp.model_1 {
+  height: 100%;
+  width: 16%;
+  left: 52%;
+  top: 0px;
+  transform: translate(-50%, 0%);
+  transform: none;
+  border-radius: 0px;
+}
+.lavalamp.model_1.color_1 .lavalamp_content {
+  background-color: #333; box-shadow: 10px 0px 15px 0px rgba(0,0,0,.07), -10px 0px 15px 0px rgba(0,0,0,.07);
+}
+.lavalamp.model_1.anim .bulle:nth-child(1) { animation: anim_bulle_1 calc(21s * 1.4) ease-in infinite; }
+.lavalamp.model_1.anim .bulle:nth-child(2) { animation: anim_bulle_2 calc(27s * 1.4) ease-in infinite; }
+.lavalamp.model_1.anim .bulle:nth-child(3) { animation: anim_bulle_3 calc(24s * 1.4) ease-in infinite; }
+.lavalamp.model_1.anim .bulle:nth-child(4) { animation: anim_bulle_4 calc(18s * 1.4) ease-in infinite; }
+
+
+.lavalamp.model_1.anim .bulle:nth-child(5) div {
+  height: 50%;
+  width: 15%;
+  left: 0%;
+  top: 25%;
+  transform: translateX(-100%);
+  background-color: red;
+}
+
+/*.lavalamp.model_1.color_1 .lavalamp_content .lavalamp_bulles .bulle div:hover { background-color: #ff0000; }*/
+
+
+</style>
+
+
+<style type="text/css">
+
+/* 404 */
+.container_404 {
+  position: absolute;
+  display: block;
+  right: 48%;
+  top: 20%;
+  color: #333;
+  font-size: 100px;
+  font-weight: bold;
+  font-family: 'Helvetica';
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<input type="radio" name="input_bg" id="input_bg" style="display: none;">
+<input type="radio" name="input_bg" id="input_bg_red" style="display: none;">
+<input type="radio" name="input_bg" id="input_bg_green" style="display: none;">
+<input type="radio" name="input_bg" id="input_bg_blue" style="display: none;">
+
+<!-- <canvas height="600" width="600" style="position: fixed; height: 100%; width: 100%; left: 0px; top: 0px;"></canvas> -->
+
+
+<!-- LAVALAMPS -->
+<div class="lavalamp anim anim_forme timing_sine model_1 bg_fff color_1 random_js">
+  <div class="lavalamp_content">
+    <div class="lavalamp_bulles">
+      <div class="bulle top"><div></div></div>
+      <div class="bulle bottom"><div></div></div>
+      <div class="bulle top"><div></div></div>
+      <div class="bulle bottom"><div></div></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- FILTER SVG -->
+<svg xmlns="http://www.w3.org/2000/svg">
+  <defs>
+  <filter id="gluant_efx" filterUnits="userSpaceOnUse">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"></feGaussianBlur>
+    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 15 -9" result="gluant_efx"></feColorMatrix>
+    <feComposite in="SourceGraphic" in2="gluant_efx" result="test" operator="atop"></feComposite>
+  </filter>
+  </defs>
+</svg>
+
+
+<!-- LOGO -->
+<div class="logo_xeno color_333 anim_1">
+  <div class="container_logo">
+    <div class="xeno_letter xeno_x"><div></div><div></div></div>
+    <div class="xeno_letter xeno_e"><div></div><div></div><div></div></div>
+    <div class="xeno_letter xeno_n"><div></div><div></div><div></div></div>
+    <div class="xeno_letter xeno_o"><div></div><div></div></div>
+  </div>
+</div>
+
+
+<div class="container_404">
+  404
+</div>
+
+<!-- PARAM -->
+<!-- <div class="checkbox">
+  <label for="input_bg">Fond NULL</label>
+  <label for="input_bg_red">Fond rouge</label>
+  <label for="input_bg_green">Fond vert</label>
+  <label for="input_bg_blue">Fond bleu</label>
+</div> -->
+
+
+
+
+<script>
+var couleurMax;
+var couleurMin;
+var ramdomCouleurs = 0;
+
+function initCouleurs() {
+  //ramdomCouleurs = Math.floor((Math.random() * 60) / 10);
+  if(ramdomCouleurs == 0) {
+    couleurMax = [0, 255, 0];
+    couleurMin = [0, 255, 100];
+  }
+  else if(ramdomCouleurs == 1) {
+    couleurMax = [100, 256, 256];
+    couleurMin = [0, 150, 256];
+  }
+
+  else if(ramdomCouleurs == 2) {
+    couleurMax = [0, 100, 50];
+    couleurMin = [10, 20, 100];
+  }
+  else if(ramdomCouleurs == 3) {
+    couleurMax = [100, 20, 250];
+    couleurMin = [100, 10, 50];
+  }
+  else if(ramdomCouleurs == 4) {
+    couleurMax = [255, 110, 150];
+    couleurMin = [10, 20, 10];
+  }
+
+  else {
+    couleurMax = [255, 255, 150];
+    couleurMin = [100, 20, 20];
+  }
+  ramdomCouleurs++
+  if(ramdomCouleurs >= 6) { ramdomCouleurs = 0; }
+}
+
+/**/
+var canvas = document.getElementsByTagName('canvas')[0],
+    ctx = null,
+    grad = null,
+    grad2 = null,
+    body = document.getElementsByTagName('body')[0],
+    color = [Math.abs(couleurMin[0]-couleurMax[0]), Math.abs(couleurMin[1]-couleurMax[1]), Math.abs(couleurMin[2]-couleurMax[2])];
+
+if (canvas.getContext('2d')) {
+  ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, 600, 600);
+  ctx.save();
+
+  var yColorR = ~~couleurMin[0];
+  var xColorV = ~~couleurMin[1];
+  var xColorB = ~~couleurMin[2];
+
+  grad = ctx.createRadialGradient(0,0,0,0,0,800);
+  grad.addColorStop(0, 'rgb(' + couleurMin[0] + ', ' + couleurMin[1] + ', ' + couleurMin[2] + ')');
+  grad.addColorStop(1, 'rgba(' + (couleurMin[0]) + ', ' + (256-couleurMin[1]) + ', ' + (256-couleurMin[2]) + ', .2)');
+  //grad.addColorStop(0, 'rgb(' + Math.round(color[0]/2) + ', ' + Math.round(color[1]/2) + ', ' + Math.round(color[2]/2) + ')');
+  //grad.addColorStop(1, '#000');
+
+
+  ctx.fillStyle = grad;
+  ctx.fillRect(0,0,600,600);
+  ctx.save();
+
+  body.onmousemove = function (event) {
+    var width = window.innerWidth,
+        height = window.innerHeight,
+        x = event.clientX,
+        y = event.clientY,
+        rx = 600 * x / width,
+        ry = 600 * y / height;
+
+    var xc = ~~(256 * x / width);
+    var yc = ~~(256 * y / height);
+
+  ctx.clearRect(0, 0, 600, 600);
+  ctx.save();
+  var xColorR = ~~(color[0] * x / width) + couleurMin[0];
+  var yColorR = ~~(color[0] * y / height) + couleurMin[0];
+  var xColorV = ~~(color[1] * x / width) + couleurMin[1];// alert(couleurMin[1])
+  var yColorV = ~~(color[1] * y / height) + couleurMin[1];
+  var xColorB = ~~(color[2] * x / width) + couleurMin[2];
+  var yColorB = ~~(color[2] * y / height) + couleurMin[2];
+
+    grad = ctx.createRadialGradient(rx, ry, 0, rx, ry, 800);
+  grad.addColorStop(0, 'rgb(' + yColorR + ', ' + xColorV + ', ' + xColorB + ')');
+  grad.addColorStop(1, 'rgba(' + yColorR + ', ' + (256-yColorV) + ', ' + (256-yColorB) + ', .2)');
+    //grad.addColorStop(1, '#000');
+    //grad.addColorStop(1, ['rgb(', yc, ', ', (255 - xc), ', ', (255-yc), ')'].join(''));     //  inversé
+    //grad.addColorStop(1, ['rgb(', 255, ', ', 255, ', ', yc, ')'].join(''));
+
+    ctx.fillStyle = grad;
+    ctx.fillRect(0,0,600,600);
+  //ctx.save();
+
+  };
+};
+
+
+document.body.onclick = function() { initCouleurs(); };
+// initCouleurs();
+
+</script>
+
+
+
+</body>
+</html>

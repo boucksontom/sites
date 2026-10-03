@@ -1,0 +1,10 @@
+{
+  "name": "sites-catalog-tools",
+  "private": true,
+  "scripts": {
+    "catalog": "node catalog-runner.mjs",
+    "catalog:publish": "node catalog-runner.mjs publish",
+    "catalog:watch": "node catalog-runner.mjs watch",
+    "publish:prepare": "node catalog-runner.mjs publish"
+  }
+}

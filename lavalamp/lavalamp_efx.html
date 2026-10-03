@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Lampe Lave Efx</title>
+
+<style type="text/css">
+
+body {
+	margin: 0px;
+	background-color: rgba(0,0,0,.1);
+}
+
+/*
+	GLUANT EFX
+*/
+.lavalamp, .lavalamp div {
+	position: absolute;
+	display: block;
+}
+.lavalamp {
+	height: 300px;
+	width: 100px;
+	left: 50%;
+	top: 50%;
+	border-radius: 100%;
+	transform: translate(-50%, -50%);
+}
+.lavalamp .lavalamp_content {
+	height: 100%;
+	width: 100%;
+	left: 0px;
+	top: 0px;
+	border-radius: inherit;
+	overflow: hidden;
+}
+.lavalamp .lavalamp_content .lavalamp_bulles {
+	height: auto;
+	width: 100%;
+	left: 0px;
+	top: -70px;
+	bottom: -70px;
+  filter:url("#gluant_efx");
+}
+.lavalamp .lavalamp_content .lavalamp_bulles:after,
+.lavalamp .lavalamp_content .lavalamp_bulles:before {
+	position: absolute;
+	display: block;
+	content: ' ';
+	height: 80px;
+	width: 140%;
+	left: -20%;
+	border-radius: 50%;
+}
+.lavalamp .lavalamp_content .lavalamp_bulles:after { top: -7px; }
+.lavalamp .lavalamp_content .lavalamp_bulles:before { bottom: 0px; }
+/* BULLES */
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle {
+	height: 100%;
+	width: 100%;
+	left: 0px;
+	top: 0px;
+}
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle div {
+	position: absolute;
+	content: ' ';
+	height: 0px;
+	width: 0px;
+	padding: 30%;
+	border-radius: 50%;
+}
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle.top, .lavalamp .lavalamp_content .lavalamp_bulles .bulle.top div { top: 0px; }
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle.bottom, .lavalamp .lavalamp_content .lavalamp_bulles .bulle.bottom div { bottom: 0px; }
+/* SIZES */
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle:nth-child(1) div { padding: 30%; }
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle:nth-child(2) div { padding: 40%; }
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle:nth-child(3) div { padding: 25%; }
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle:nth-child(4) div { padding: 35%; }
+/* COLOR DEFAULT */
+.lavalamp .lavalamp_content { background-color: #fff; }
+.lavalamp .lavalamp_content .lavalamp_bulles:after,
+.lavalamp .lavalamp_content .lavalamp_bulles:before,
+.lavalamp .lavalamp_content .lavalamp_bulles .bulle div { background-color: #333; }
+
+/*
+	ANIMATION
+*/
+.lavalamp.anim .bulle:nth-child(1) { animation: anim_bulle_1 21s ease-in infinite; }
+.lavalamp.anim .bulle:nth-child(2) { animation: anim_bulle_2 27s ease-in infinite; }
+.lavalamp.anim .bulle:nth-child(3) { animation: anim_bulle_3 24s ease-in infinite; }
+.lavalamp.anim .bulle:nth-child(4) { animation: anim_bulle_4 18s ease-in infinite; }
+.lavalamp.anim .bulle.top { animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715); }
+.lavalamp.anim .bulle.bottom { animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1); }
+/**/
+@keyframes anim_bulle_1 {
+	0% { transform: translate(0px, 0px); }
+	50% { transform: translate(20px, 100%); }
+}
+@keyframes anim_bulle_2 {
+	0% { transform: translate(0px, 0px); }
+	50% { transform: translate(0px, -100%); }
+}
+@keyframes anim_bulle_3 {
+	50% { transform: translate(0px, 0px); }
+	100% { transform: translate(20px, 100%); }
+}
+@keyframes anim_bulle_4 {
+	50% { transform: translate(0px, 0px); }
+	100% { transform: translate(0px, -100%); }
+}
+
+
+/* ANIM FORME BULLES */
+.lavalamp.anim_forme .lavalamp_content .lavalamp_bulles .bulle div:after {
+	position: absolute;
+	display: block;
+	content: ' ';
+	height: 80%;
+	width: 80%;
+	left: 10%;
+	top: 10%;
+	border-radius: 50%;
+	background: inherit;
+	background-color: inherit;
+	filter: blur(5px);
+}
+.lavalamp.anim.anim_forme .lavalamp_content .lavalamp_bulles .bulle:nth-child(1) div:after { animation: anim_forme_bulle_1 5s infinite alternate; }
+.lavalamp.anim.anim_forme .lavalamp_content .lavalamp_bulles .bulle:nth-child(2) div:after { animation: anim_forme_bulle_2 5s infinite alternate; }
+.lavalamp.anim.anim_forme .lavalamp_content .lavalamp_bulles .bulle:nth-child(3) div:after { animation: anim_forme_bulle_1 5s infinite alternate; }
+.lavalamp.anim.anim_forme .lavalamp_content .lavalamp_bulles .bulle:nth-child(4) div:after { animation: anim_forme_bulle_2 5s infinite alternate; }
+/**/
+@keyframes anim_forme_bulle_1 {
+	0% { transform: translate(15%, 15%); }
+	50% { transform: translate(0%, 0%) scaleY(1.5); }
+	100% { transform: translate(-15%, -15%); }
+}
+@keyframes anim_forme_bulle_2 {
+	0% { transform: translate(8%, -15%); }
+	100% { transform: translate(5%, 20%); }
+}
+
+</style>
+
+<style type="text/css">
+
+/* --- / PARAM SUPPLEMENTAIRES / ---*/
+/* COLOR */
+.lavalamp.color_1 { background-color: #333; }
+.lavalamp.color_1 .lavalamp_content .lavalamp_bulles:after,
+.lavalamp.color_1 .lavalamp_content .lavalamp_bulles:before,
+.lavalamp.color_1 .lavalamp_content .lavalamp_bulles .bulle div { background-color: #ececec; }
+
+.lavalamp.color_2 .lavalamp_content {
+	background: linear-gradient(125deg, rgba(153,218,255,1) 0%, rgba(0,128,128,1) 100%);
+}
+.lavalamp.color_2 .lavalamp_content .lavalamp_bulles:after,
+.lavalamp.color_2 .lavalamp_content .lavalamp_bulles:before,
+.lavalamp.color_2 .lavalamp_content .lavalamp_bulles .bulle div {
+	background-color: #f7b42c;
+	background-image: linear-gradient(315deg, #f7b42c 0%, #fc575e 74%);
+}
+.lavalamp.color_2.socle:before,
+.lavalamp.color_2 .lavalamp_content:after,
+.lavalamp.color_2 .lavalamp_content:before { background-image: linear-gradient(315deg, #20819b 0%, #b7aea3 94%) !important; }
+
+/* CHAPEAU & SOCLE */
+.lavalamp.socle:before {
+	position: absolute;
+	display: block;
+	content: ' ';
+	height: 10%;
+	width: 80%;
+	left: 10%;
+	top: 95%;
+	border-radius: 50%;
+	background-image: linear-gradient(315deg, #2f4353 0%, #d2ccc4 94%);
+}
+.lavalamp.socle .lavalamp_content:after,
+.lavalamp.socle .lavalamp_content:before {
+	position: absolute;
+	display: block;
+	content: ' ';
+	height: 24%;
+	width: 100%;
+	left: 0px;
+	border-radius: 50%;
+	background-color: #2f4353;
+	background-image: linear-gradient(315deg, #2f4353 0%, #d2ccc4 94%);
+	z-index: 10;
+}
+.lavalamp.socle .lavalamp_content:before { top: -8%; }
+.lavalamp.socle .lavalamp_content:after {	bottom: -8%; }
+.lavalamp.socle .lavalamp_content .lavalamp_bulles:after,
+.lavalamp.socle .lavalamp_content .lavalamp_bulles:before { width: 100%; left: 0%; }
+.lavalamp.socle .lavalamp_content .lavalamp_bulles:after { top: 40px; }
+.lavalamp.socle .lavalamp_content .lavalamp_bulles:before { bottom: 40px; }
+
+
+</style>
+
+</head>
+
+<body>
+
+
+<!- LAVALAMPS ->
+<div class="lavalamp anim anim_forme timing_sine socle color_2">
+	<div class="lavalamp_content">
+		<div class="lavalamp_bulles">
+			<div class="bulle top"><div></div></div>
+			<div class="bulle bottom"><div></div></div>
+			<div class="bulle top"><div></div></div>
+			<div class="bulle bottom"><div></div></div>
+		</div>
+	</div>
+</div>
+
+
+<!- FILTER SVG ->
+<svg xmlns="http://www.w3.org/2000/svg">
+	<defs>
+    <filter id="gluant_efx">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"></feGaussianBlur>
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 15 -9" result="gluant_efx"></feColorMatrix>
+      <feComposite in="SourceGraphic" in2="gluant_efx" operator="atop"></feComposite>
+    </filter>
+  </defs>
+</svg>
+
+
+
+</body>
+</html>

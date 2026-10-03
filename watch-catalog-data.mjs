@@ -71,3 +71,5 @@ process.on('SIGINT', () => {
 });
 
 console.log('[catalog] watcher actif. Ctrl+C pour arrêter.');
+
+export {};

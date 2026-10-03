@@ -7,9 +7,11 @@ export const outputFile = path.join(rootDir, 'catalog-data.js');
 
 const excludedRootFiles = new Set([
   'catalog-data.js',
+  'catalog-runner.mjs',
   'catalog-tools.mjs',
   'generate-catalog-data.mjs',
   'index.html',
+  'package.json',
   'watch-catalog-data.mjs'
 ]);
 

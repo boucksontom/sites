@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>TEST EFX GLUANT</title>
+
+<style>
+html, body {
+  min-width:320px;
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0;
+  color:#fff;
+  font:1em sans-serif;
+}
+
+.h8u-menu {
+  width:320px;
+  height:200px;
+  filter:url("#goo");
+}
+
+.h8u-menu-wrapper {
+  Margin:0 auto;
+  width:80px;
+  padding-top:120px;
+}
+
+.h8u-button, .h8u-nav-item {
+  display:block !important;
+  background:#333;
+  border-radius:50%;
+  color:#fff;
+  border:none;
+  outline:none;
+  Position:relative;
+  Z-index:1;
+  cursor:pointer;
+  font-weight:bold;
+  text-align:center;
+  transition:transform 2s cubic-bezier(0.5, 1.5, 0.5, 1.25), background-color 0.25s linear;
+}
+
+.h8u-button {
+  width:80px !important;
+  height:80px !important;
+  line-height:80px;
+  font-size:40px !important;
+  transform:rotate(-45deg);
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  -webkit-tap-highlight-color:transparent;
+  -moz-user-select:none;
+  -webkit-user-select:none;
+  user-select:none;
+}
+
+.h8u-nav-item {
+  Margin:-60px auto 0;
+  width:60px !important;
+  height:60px !important;
+  font-weight:bold;
+  line-height:60px;
+  font-size:20px;
+  Z-index:0;
+  transform:translate(0, 0) rotate(-90deg);
+  transform:translate3d(0, 0, 0) rotate(-90deg);
+}
+
+.h8u-nav-item--1 {
+  Margin-top:-70px;
+  transform:translate(0, 0) rotate(90deg);
+  transform:translate3d(0, 0, 0) rotate(90deg);
+}
+
+.h8u-nav-item--1:hover {
+  background-color:#ada248;
+}
+
+.h8u-nav-item--2:hover {
+  background-color:#d95843;
+}
+
+.h8u-nav-item--3:hover {
+  background-color:#f4a938;
+}
+
+.moz-text-html .h8u-button,
+.moz-text-html .h8u-nav-item,
+.ExternalClass .h8u-button,
+.ExternalClass .h8u-nav-item,
+noinput.h8u-checkbox .h8u-button,
+noinput.h8u-checkbox .h8u-nav-item {
+  transition-delay:0.5s, 0s;
+}
+
+.h8u-checkbox:checked + * .h8u-button,
+.moz-text-html .h8u-menu-wrapper:hover .h8u-button,
+noinput.h8u-checkbox .h8u-menu-wrapper:hover .h8u-button,
+.ExternalClass .h8u-menu-wrapper:hover .h8u-button {
+  Position:relative;
+  transform:translate(0, 0) rotate(0) scale(0.8);
+  transform:translate3d(0, 0, 0) rotate(0) scale(0.8);
+  transition-duration:0.5s;
+  transition-delay:0s;
+}
+
+.h8u-checkbox:checked + * .h8u-nav-item--1,
+.moz-text-html .h8u-menu-wrapper:hover .h8u-nav-item--1,
+noinput.h8u-checkbox .h8u-menu-wrapper:hover .h8u-nav-item--1,
+.ExternalClass .h8u-menu-wrapper:hover .h8u-nav-item--1 {
+  transform:translate(-150%, -50%);
+  transform:translate3d(-90px, -30px, 0);
+  transition-delay:0s;
+}
+
+.h8u-checkbox:checked + * .h8u-nav-item--2,
+.moz-text-html .h8u-menu-wrapper:hover .h8u-nav-item--2,
+noinput.h8u-checkbox .h8u-menu-wrapper:hover .h8u-nav-item--2,
+.ExternalClass .h8u-menu-wrapper:hover .h8u-nav-item--2 {
+  transform:translate(0, -150%);
+  transform:translate3d(0px, -90px, 0);
+  transition-delay:0.125s, 0s;
+}
+
+.h8u-checkbox:checked + * .h8u-nav-item--3,
+.moz-text-html .h8u-menu-wrapper:hover .h8u-nav-item--3,
+noinput.h8u-checkbox .h8u-menu-wrapper:hover .h8u-nav-item--3,
+.ExternalClass .h8u-menu-wrapper:hover .h8u-nav-item--3 {
+  -webkit-transform:translate(150%, -50%);
+  transform:translate(150%, -50%);
+  -webkit-transform:translate3d(90px, -30px, 0);
+  transform:translate3d(90px, -30px, 0);
+  transition-delay:0.25s, 0s;
+}
+
+noinput.h8u-checkbox { display:block !important; }
+
+.h8u-menu img { background:transparent !important; }
+
+* input[type="checkbox"] { display:none !important; }
+
+</style>
+
+<style type="text/css">
+
+#test_1 {
+  position: absolute;
+  height: 400px;
+  width: 400px;
+  left: 500px;
+  top: 200px;
+  /*filter: url('#test_backdrop_1');*/
+}
+#test_1 .test {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+}
+#test_1 .test.test_a {
+  left: 20px;
+  top: 20px;
+  background-color: red;
+}
+#test_1 .test.test_b {
+  left: 50px;
+  top: 30px;
+  background-color: blue;
+}
+#test_1 .test.test_c {
+  left: 30px;
+  top: 50px;
+  background-color: orange;
+}
+
+#test_1 .test.test_backdrop {
+  left: 40px;
+  top: 40px;
+  border: 1px solid rgba(0,0,0,.1);
+  /*filter: url('#test_backdrop');*/
+}
+
+</style>
+
+
+</head>
+<body>
+
+<a href="http://emails.hteumeuleu.fr/2015/03/e-mail-interactif-filtre-svg-transitions-css/" target="_blank" style="display: block; color: #333; padding: 20px;">http://emails.hteumeuleu.fr/2015/03/e-mail-interactif-filtre-svg-transitions-css/</a>
+
+
+<div style="background:#fff; padding-bottom:26px;">
+  <div class="h8u-menu">
+    <input type="checkbox" class="h8u-checkbox" id="h8u-checkbox" style="display:none;" />
+    <div class="h8u-menu-wrapper" style="text-align:center;">
+      <label class="h8u-button" for="h8u-checkbox" style="display:none; mso-hide:all; font-size:0;">&times;</label>
+      <a href="http://www.litmus.com/builder" target="_blank" class="h8u-nav-item h8u-nav-item--1"><img src="http://emails.hteumeuleu.fr/wp-content/uploads/2015/03/icon1.png" alt="Builder" width="60" height="60" border="0" style="background:#333;" /></a>
+      <a href="http://www.litmus.com/tests" target="_blank" class="h8u-nav-item h8u-nav-item--2"><img src="http://emails.hteumeuleu.fr/wp-content/uploads/2015/03/icon2.png" alt="Previews" width="60" height="60" border="0" style="background:#333;" /></a>
+      <a href="http://www.litmus.com/analytics" target="_blank" class="h8u-nav-item h8u-nav-item--3"><img src="http://emails.hteumeuleu.fr/wp-content/uploads/2015/03/icon3.png" alt="Analytics" width="60" height="60" border="0" style="background:#333;" /></a>
+    </div>
+  </div>
+</div>
+
+<div id="test_1">
+  <div class="test test_a">a</div>
+  <div class="test test_b">b</div>
+  <div class="test test_c">c</div>
+
+  <div class="test test_backdrop" style="background-image: -moz-element('#test_1');"></div>
+</div>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1" height="1">
+  <defs>
+    <filter id="goo">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"></feColorMatrix>
+      <feComposite in="SourceGraphic" in2="goo" operator="atop"></feComposite>
+    </filter>
+    <filter id="test_backdrop">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="test_backdrop"></feColorMatrix>
+      <feComposite in="SourceGraphic" in2="test_backdrop" operator="atop"></feComposite>
+    </filter>
+  </defs>
+</svg>
+
+
+</body>
+</html>
