@@ -5,6 +5,8 @@
     "catalog": "node catalog-runner.mjs",
     "catalog:publish": "node catalog-runner.mjs publish",
     "catalog:watch": "node catalog-runner.mjs watch",
-    "publish:prepare": "node catalog-runner.mjs publish"
+    "publish:prepare": "node catalog-runner.mjs publish",
+    "publish:site": "node publish-site.mjs",
+    "publish:site:dry": "node publish-site.mjs --dry-run"
   }
 }

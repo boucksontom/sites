@@ -12,6 +12,7 @@ const excludedRootFiles = new Set([
   'generate-catalog-data.mjs',
   'index.html',
   'package.json',
+  'publish-site.mjs',
   'watch-catalog-data.mjs'
 ]);
 

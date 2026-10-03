@@ -8,5 +8,8 @@ window.SITES_CATALOG_PATHS = [
   "datepicker/spiral js-css.html",
   "datepicker/test.html",
   "datepicker/test2.html",
-  "lavalamp/404_lavalamp.html"
+  "lavalamp/404_lavalamp.html",
+  "lavalamp/404.html",
+  "lavalamp/efx_gluant.html",
+  "lavalamp/lavalamp_efx.html"
 ];
