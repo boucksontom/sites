@@ -67,7 +67,6 @@
 
       a,
       button,
-      input,
       select {
         font: inherit;
       }
@@ -78,7 +77,6 @@
 
       a:focus-visible,
       button:focus-visible,
-      input:focus-visible,
       select:focus-visible {
         outline: 3px solid var(--accent-strong);
         outline-offset: 3px;
@@ -125,18 +123,20 @@
         text-transform: uppercase;
       }
 
-      h1 {
-        margin: 0;
-        /* font-size: clamp(24px, 3em, 52px); */
-        font-size: 2rem;
-        letter-spacing: -0.045em;
-        line-height: 1.08;
-      }
-
       .result-summary {
         margin: 10px 0 10px;
         color: var(--muted);
         font-size: 14px;
+      }
+
+      .status-message {
+        margin: 0 0 10px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .status-message[data-variant="error"] {
+        color: #b54708;
       }
 
       .project-list {
@@ -180,7 +180,7 @@
 
       .project-title {
         margin: 0;
-        font-size: 26px;
+        font-size: 1.4rem;
         line-height: 1.15;
       }
 
@@ -202,48 +202,6 @@
         color: var(--muted);
         font-size: 12px;
         font-weight: 650;
-      }
-
-      .project-description {
-        margin: 0;
-        color: var(--muted);
-        line-height: 1.65;
-      }
-
-      .project-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
-      .button-link {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 42px;
-        padding: 0 16px;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        background: var(--surface);
-        color: var(--text);
-        text-decoration: none;
-        transition: transform 140ms ease, border-color 140ms ease;
-      }
-
-      .button-link:hover {
-        transform: translateY(-1px);
-        border-color: var(--accent);
-      }
-
-      .button-link.primary {
-        border-color: var(--accent);
-        background: var(--accent);
-        color: #ffffff;
-      }
-
-      .button-link.primary:hover {
-        border-color: var(--accent-strong);
-        background: var(--accent-strong);
       }
 
       .tag-list {
@@ -382,9 +340,9 @@
     <main class="page">
       <header class="page-header">
         <div>
-        <p class="eyebrow">boucksontom.github.io</p>
-        <p class="result-summary" id="result-summary" aria-live="polite"></p>
-        <!-- <h1>/sites</h1> -->
+          <p class="eyebrow">boucksontom.github.io/sites</p>
+          <p class="result-summary" id="result-summary" aria-live="polite">Chargement du catalogue…</p>
+          <p class="status-message" id="status-message" aria-live="polite" hidden></p>
         </div>
         <label class="theme-picker" for="theme">
           Thème
@@ -410,41 +368,30 @@
       <iframe class="viewer-frame" id="viewer-frame" title="Aperçu du fichier"></iframe>
     </dialog>
 
+    <script src="catalog-data.js"></script>
     <script>
       const THEME_STORAGE_KEY = 'sites-theme';
-      const catalog = [
-        {
-          name: 'datepicker',
-          kind: 'Dossier',
-          badge: 'DIR',
-          href: 'datepicker/index.html',
-          description: 'Index des démos et expérimentations autour du sélecteur de date, avec plusieurs variantes HTML.',
-          tags: ['calendrier', 'spirale', 'tests'],
-          entries: [
-            { name: 'index.html', href: 'datepicker/index.html', type: 'Index du dossier' },
-            { name: 'src/datepicker.html', href: 'datepicker/src/datepicker.html', type: 'Démo principale' },
-            { name: 'src/datepicker-test.html', href: 'datepicker/src/datepicker-test.html', type: 'Page de test' },
-            { name: 'src/datepicker-test2.html', href: 'datepicker/src/datepicker-test2.html', type: 'Page de test' },
-            { name: 'src/input_date.html', href: 'datepicker/src/input_date.html', type: 'Champ date' },
-            { name: 'src/test.html', href: 'datepicker/src/test.html', type: 'Prototype' },
-            { name: 'src/test2.html', href: 'datepicker/src/test2.html', type: 'Prototype' }
-          ]
-        },
-        {
-          name: 'lavalamp',
-          kind: 'Démo',
-          badge: 'HTML',
-          href: 'lavalamp/404_lavalamp.html',
-          description: 'Animation visuelle de type lampe à lave, dans une page HTML autonome.',
-          tags: ['animation', 'visuel', '404'],
-          entries: [
-            { name: '404_lavalamp.html', href: 'lavalamp/404_lavalamp.html', type: 'Page web' }
-          ]
-        }
-      ];
+      const FILE_TYPE_LABELS = new Map([
+        ['.css', 'Feuille de style'],
+        ['.gif', 'Image GIF'],
+        ['.htm', 'Page web'],
+        ['.html', 'Page web'],
+        ['.jpeg', 'Image JPEG'],
+        ['.jpg', 'Image JPEG'],
+        ['.js', 'Script JavaScript'],
+        ['.json', 'Fichier JSON'],
+        ['.md', 'Document Markdown'],
+        ['.mjs', 'Module JavaScript'],
+        ['.pdf', 'Document PDF'],
+        ['.png', 'Image PNG'],
+        ['.svg', 'Image SVG'],
+        ['.txt', 'Fichier texte'],
+        ['.webp', 'Image WebP']
+      ]);
 
       const projectList = document.querySelector('#project-list');
       const resultSummary = document.querySelector('#result-summary');
+      const statusMessage = document.querySelector('#status-message');
       const themeSelect = document.querySelector('#theme');
       const viewer = document.querySelector('#viewer');
       const viewerTitle = document.querySelector('#viewer-title');
@@ -471,6 +418,79 @@
 
       function pluralize(count, singular, plural = singular + 's') {
         return count > 1 ? plural : singular;
+      }
+
+      function getFileExtension(path) {
+        const dotIndex = path.lastIndexOf('.');
+        return dotIndex === -1 ? '' : path.slice(dotIndex).toLowerCase();
+      }
+
+      function getEntryType(path) {
+        return FILE_TYPE_LABELS.get(getFileExtension(path)) || 'Fichier';
+      }
+
+      function isBrowsablePath(path) {
+        const segments = path.split('/');
+        return segments.length > 1 && segments.every((segment) => segment && !segment.startsWith('.')) && FILE_TYPE_LABELS.has(getFileExtension(path));
+      }
+
+      function compareEntryNames(left, right) {
+        const leftIsIndex = /(^|\/)index\.html?$/i.test(left);
+        const rightIsIndex = /(^|\/)index\.html?$/i.test(right);
+        if (leftIsIndex !== rightIsIndex) return leftIsIndex ? -1 : 1;
+        return left.localeCompare(right, 'fr', { numeric: true, sensitivity: 'base' });
+      }
+
+      function setStatus(message, variant = 'info') {
+        statusMessage.hidden = !message;
+        statusMessage.textContent = message || '';
+        statusMessage.dataset.variant = variant;
+      }
+
+      function clearStatus() {
+        statusMessage.hidden = true;
+        statusMessage.textContent = '';
+        delete statusMessage.dataset.variant;
+      }
+
+      function createCatalogFromPaths(paths) {
+        const projects = new Map();
+
+        paths.forEach((path) => {
+          if (!isBrowsablePath(path)) return;
+
+          const [projectName, ...rest] = path.split('/');
+          if (!projectName || rest.length === 0) return;
+
+          const entryName = rest.join('/');
+          const entry = {
+            name: entryName,
+            href: encodeURI(path),
+            type: getEntryType(path),
+            extension: getFileExtension(path)
+          };
+
+          if (!projects.has(projectName)) {
+            projects.set(projectName, []);
+          }
+
+          projects.get(projectName).push(entry);
+        });
+
+        return [...projects.entries()]
+          .map(([name, entries]) => {
+            entries.sort((left, right) => compareEntryNames(left.name, right.name));
+
+            const tags = [...new Set(entries.map((entry) => entry.extension.replace('.', '').toUpperCase()))];
+
+            return {
+              name,
+              badge: 'DIR',
+              tags,
+              entries: entries.map(({ name: entryName, href, type }) => ({ name: entryName, href, type }))
+            };
+          })
+          .sort((left, right) => left.name.localeCompare(right.name, 'fr', { numeric: true, sensitivity: 'base' }));
       }
 
       function createEntryLink(entry) {
@@ -512,15 +532,10 @@
         const meta = document.createElement('div');
         meta.className = 'project-meta';
 
-        const typePill = document.createElement('span');
-        typePill.className = 'meta-pill';
-        typePill.textContent = project.kind;
-
         const countPill = document.createElement('span');
         countPill.className = 'meta-pill';
         countPill.textContent = `${project.entries.length} ${pluralize(project.entries.length, 'entrée')}`;
 
-        // meta.append(typePill, countPill);
         meta.append(countPill);
         titleGroup.append(title, meta);
 
@@ -529,27 +544,6 @@
         badge.textContent = project.badge;
 
         header.append(titleGroup, badge);
-
-        const description = document.createElement('p');
-        description.className = 'project-description';
-        description.textContent = project.description;
-
-        const actions = document.createElement('div');
-        actions.className = 'project-actions';
-
-        const openButton = document.createElement('a');
-        openButton.className = 'button-link primary';
-        openButton.href = project.href;
-        openButton.dataset.preview = 'true';
-        openButton.dataset.label = `${project.name} — aperçu`;
-        openButton.textContent = 'Aperçu rapide';
-
-        const directButton = document.createElement('a');
-        directButton.className = 'button-link';
-        directButton.href = project.href;
-        directButton.textContent = 'Ouvrir la page';
-
-        actions.append(openButton, directButton);
 
         const tagList = document.createElement('div');
         tagList.className = 'tag-list';
@@ -566,12 +560,11 @@
           entryList.append(createEntryLink(entry));
         });
 
-        // article.append(header, description, actions, tagList, entryList);
         article.append(header, tagList, entryList);
         return article;
       }
 
-      function renderProjects() {
+      function renderProjects(catalog) {
         const totalEntries = catalog.reduce((sum, project) => sum + project.entries.length, 0);
 
         projectList.replaceChildren(...catalog.map(createProjectCard));
@@ -613,7 +606,36 @@
         storeTheme(themeSelect.value);
       });
 
-      renderProjects();
+      function readCatalogPaths() {
+        const paths = window.SITES_CATALOG_PATHS;
+        if (!Array.isArray(paths) || paths.length === 0) {
+          throw new Error('catalog-data.js est absent ou vide. Exécutez "node generate-catalog-data.mjs" pour le régénérer.');
+        }
+
+        return paths;
+      }
+
+      function initializeCatalog() {
+        projectList.setAttribute('aria-busy', 'true');
+        clearStatus();
+
+        try {
+          const catalog = createCatalogFromPaths(readCatalogPaths());
+          if (!catalog.length) {
+            throw new Error('Aucun fichier compatible trouvé dans catalog-data.js.');
+          }
+
+          renderProjects(catalog);
+        } catch (error) {
+          projectList.replaceChildren();
+          resultSummary.textContent = 'Catalogue indisponible';
+          setStatus(`Chargement du catalogue impossible : ${error.message}`, 'error');
+        } finally {
+          projectList.removeAttribute('aria-busy');
+        }
+      }
+
+      initializeCatalog();
     </script>
   </body>
 </html>
