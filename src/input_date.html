@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>TEST</title>
+<meta name="description" content="description"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- <link id="favicon" rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png" /> -->
+<!-- <link href="assets/css/css.css" rel="stylesheet" type="text/css" /> -->
+
+
+<style type="text/css">
+
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Alfa Slab One;
+}
+
+.container {
+  position: relative;
+  height: 400px;
+  width: 400px;
+  transform: scale(1) rotate(0deg);
+  transition: 1s;
+/*  --path: '';*/
+
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1) rotate(0deg);
+}
+
+.container .spirals {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+.container .spirals.spiral-month {
+  transform: rotate(180deg);
+}
+.container .spirals.spiral-day {
+  transform: rotate(0deg);
+}
+
+.container .spirals .onpath {
+  position: absolute;
+  left: 0;
+  top: 0;
+  offset-path: var(--path);
+  offset-distance: var(--offsetDistance);
+  transform: scale(1) rotate(0deg);
+  transition: all 1s, background .1s, color .1s;
+  pointer-events: all;
+  opacity: 1;
+}
+
+/* DAYS  */
+.onpath.day {
+  display: flex;
+  height: 34px;
+  width: 34px;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  background-color: #1b6988;
+  cursor: pointer;
+}
+.onpath.day:hover {
+  background-color: red;
+  z-index: 1;
+}
+
+/* MONTHS */
+.months .onpath.month {
+  font-size: 28px;
+  cursor: pointer;
+}
+.months:hover .onpath.month {
+  color: red;
+}
+
+
+
+.container .spirals.spiral-month .onpath {
+}
+.container .spirals .month .onpath.day {
+}
+
+
+#hideDatepicker:checked ~ .container {
+  transform: scale(0) rotate(440deg);
+/*  animation: hide-datepicker-container 1s forwards;*/
+  transform: translate(-50%, -50%) scale(0) rotate(440deg);
+}
+#hideDatepicker:checked ~ .container .spirals .onpath {
+  offset-distance: 0%;
+  transform: scale(0) rotate(180deg);
+/*  animation: hide-datepicker-onpath 1s forwards;*/
+}
+
+@keyframes hide-datepicker-container {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }  
+  100% {
+    transform: scale(0) rotate(440deg);
+  }
+}
+@keyframes hide-datepicker-onpath {
+  0% {
+    offset-distance: var(--offsetDistance);
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }    
+  100% {
+    offset-distance: 0%;
+    transform: scale(0) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+
+#showMonth:checked ~ .container .spirals.spiral-day .onpath {
+/*  offset-distance: 0%;*/
+}
+/*.container .spirals.spiral-year .onpath {
+  offset-distance: 100%;
+}
+#showMonth:checked ~ .container .spirals.spiral-year .onpath {
+  offset-distance: var(--offsetDistance);
+}*/
+.container .spirals.spiral-year .onpath {
+  offset-distance: 100%;
+  animation: hide-year 1s forwards;
+/*  animation-play-state: paused;*/
+}
+#showMonth:checked ~ .container .spirals.spiral-year .onpath {
+  animation: show-year 1s forwards;
+/*  animation-play-state: running;*/
+}
+@keyframes hide-year {
+  0% {
+    offset-distance: var(--offsetDistance);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 120%;
+/*    opacity: 0;*/
+  }
+}
+@keyframes show-year {
+  0% {
+    offset-distance: 120%;
+/*    transform: scale(0);*/
+/*    opacity: 0;*/
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    offset-distance: var(--offsetDistance);
+  }
+}
+
+
+.container .spirals.spiral-day .onpath {
+  offset-distance: 100%;
+  animation: hide-day 1s forwards;
+/*  animation-play-state: paused;*/
+}
+#showMonth:checked ~ .container .spirals.spiral-day .onpath {
+  animation: show-day 1s forwards;
+/*  animation-play-state: running;*/
+}
+@keyframes hide-day {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+    transform: scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    offset-distance: var(--offsetDistance);
+  }
+}
+@keyframes show-day {
+  0% {
+    offset-distance: var(--offsetDistance);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+}
+
+
+svg {
+/*  stroke: transparent;*/
+  fill: transparent;
+}
+
+.container .spiral-year .onpath {
+  font-size: 16px;
+}
+
+</style>
+
+<style type="text/css">
+
+#container {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+  align-items: center;
+  justify-content: center;
+}
+
+#container .container_input {
+  position: relative;
+  display: block;
+} 
+#container .container_input .icon {
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: #ccc;
+}
+#container .container_input input:focus ~ .icon {
+  fill: blue;
+}
+
+#container .container_input input {
+  padding: 5px 28px 5px 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  /*background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tISBGb250IEF3ZXNvbWUgUHJvIDYuNC4wIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlIChDb21tZXJjaWFsIExpY2Vuc2UpIENvcHlyaWdodCAyMDIzIEZvbnRpY29ucywgSW5jLiAtLT48cGF0aCBkPSJNMTI4IDBjMTcuNyAwIDMyIDE0LjMgMzIgMzJWNjRIMjg4VjMyYzAtMTcuNyAxNC4zLTMyIDMyLTMyczMyIDE0LjMgMzIgMzJWNjRoNDhjMjYuNSAwIDQ4IDIxLjUgNDggNDh2NDhIMFYxMTJDMCA4NS41IDIxLjUgNjQgNDggNjRIOTZWMzJjMC0xNy43IDE0LjMtMzIgMzItMzJ6TTAgMTkySDQ0OFY0NjRjMCAyNi41LTIxLjUgNDgtNDggNDhINDhjLTI2LjUgMC00OC0yMS41LTQ4LTQ4VjE5MnptNjQgODB2MzJjMCA4LjggNy4yIDE2IDE2IDE2aDMyYzguOCAwIDE2LTcuMiAxNi0xNlYyNzJjMC04LjgtNy4yLTE2LTE2LTE2SDgwYy04LjggMC0xNiA3LjItMTYgMTZ6bTEyOCAwdjMyYzAgOC44IDcuMiAxNiAxNiAxNmgzMmM4LjggMCAxNi03LjIgMTYtMTZWMjcyYzAtOC44LTcuMi0xNi0xNi0xNkgyMDhjLTguOCAwLTE2IDcuMi0xNiAxNnptMTQ0LTE2Yy04LjggMC0xNiA3LjItMTYgMTZ2MzJjMCA4LjggNy4yIDE2IDE2IDE2aDMyYzguOCAwIDE2LTcuMiAxNi0xNlYyNzJjMC04LjgtNy4yLTE2LTE2LTE2SDMzNnpNNjQgNDAwdjMyYzAgOC44IDcuMiAxNiAxNiAxNmgzMmM4LjggMCAxNi03LjIgMTYtMTZWNDAwYzAtOC44LTcuMi0xNi0xNi0xNkg4MGMtOC44IDAtMTYgNy4yLTE2IDE2em0xNDQtMTZjLTguOCAwLTE2IDcuMi0xNiAxNnYzMmMwIDguOCA3LjIgMTYgMTYgMTZoMzJjOC44IDAgMTYtNy4yIDE2LTE2VjQwMGMwLTguOC03LjItMTYtMTYtMTZIMjA4em0xMTIgMTZ2MzJjMCA4LjggNy4yIDE2IDE2IDE2aDMyYzguOCAwIDE2LTcuMiAxNi0xNlY0MDBjMC04LjgtNy4yLTE2LTE2LTE2SDMzNmMtOC44IDAtMTYgNy4yLTE2IDE2eiIvPjwvc3ZnPg==);
+  background-position: right 5px center;
+  background-repeat: no-repeat;
+  background-size: 18px 18px;*/
+}
+#container .container_input input:focus {
+  outline: 1px solid blue;
+}
+
+
+
+
+.container {
+  transform: scale(1) rotate(0deg);
+/*  animation: hide-datepicker-container 1s forwards;*/
+  transform: translate(-50%, -50%) scale(1) rotate(0deg);
+}
+
+.container .spirals .onpath {
+/*  offset-path: var(--path);*/
+  offset-distance: var(--offsetDistance);
+  transform: scale(1) rotate(0deg);
+}
+
+#container .container_input input:not(:focus) ~ .container {
+  transform: scale(0) rotate(440deg);
+/*  animation: hide-datepicker-container 1s forwards;*/
+  transform: translate(-50%, -50%) scale(0) rotate(440deg);
+}
+
+#container .container_input input:not(:focus) ~ .container .spirals .onpath {
+  offset-distance: 0%;
+  transform: scale(0) rotate(180deg);
+/*  animation: hide-datepicker-onpath 1s forwards;*/
+}
+
+
+
+
+</style>
+
+</head>
+
+<body>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="icon-calendar" viewBox="0 0 448 512">
+    <path d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm64 80v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm128 0v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H208c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H336zM64 400v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H208zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H336c-8.8 0-16 7.2-16 16z"/>
+  </symbol>
+</svg>
+
+<!-- <div class="container">
+  <div class="spirals spiral-year"></div>
+  <div class="spirals spiral-month"></div>
+  <div class="spirals spiral-day"></div>
+  <div class="spirals spiral-value"></div>
+</div> -->
+
+
+
+<div id="container">
+
+  <div class="container_input">
+    <input type="text">
+    <svg class="icon"><use xlink:href="#icon-calendar"></use></svg>
+
+
+    <div class="container">
+      <div class="spirals spiral-year"></div>
+      <div class="spirals spiral-month"></div>
+      <div class="spirals spiral-day"></div>
+      <div class="spirals spiral-value"></div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<label for="hideDatepicker">Hide</label>
+<input type="checkbox" id="hideDatepicker" name="">
+
+
+<label for="showMonth">ShowMonth</label>
+<input type="checkbox" name="state" id="showMonth">
+
+
+<br><br>
+
+
+
+
+<script type="text/javascript">
+
+const clickTspan = function (t) {
+  // console.log(t)
+  document.querySelector('#input-month').textContent = t.textContent
+}
+
+</script>
+
+<script type="text/javascript">
+
+function lineIntersection (m1, b1, m2, b2) {
+    if (m1 === m2) {
+        throw new Error("parallel slopes");
+    }
+    const x = (b2 - b1) / (m1 - m2);
+    return {x: x, y: m1 * x + b1};
+}
+
+function pStr (point) {
+  return `${point.x},${point.y} `;
+}
+
+function getPath (center, startRadius, spacePerLoop, startTheta, endTheta, thetaStep) {
+    // Rename spiral parameters for the formula r = a + bθ
+    const a = startRadius;  // start distance from center
+    const b = spacePerLoop / Math.PI / 2; // space between each loop
+
+    // convert angles to radians
+    let oldTheta = newTheta = startTheta * Math.PI / 180;
+    endTheta = endTheta * Math.PI / 180;
+    thetaStep = thetaStep * Math.PI / 180;
+
+    // radii
+    let oldR,
+        newR = a + b * newTheta;
+
+    // start and end points
+    const oldPoint = {x: 0, y: 0};
+    const newPoint = {
+        x: center.x + newR * Math.cos(newTheta), 
+        y: center.y + newR * Math.sin(newTheta)
+    };
+
+    // slopes of tangents
+    let oldslope,
+        newSlope = (b * Math.sin(oldTheta) + (a + b * newTheta) * Math.cos(oldTheta)) /
+                   (b * Math.cos(oldTheta) - (a + b * newTheta) * Math.sin(oldTheta));
+
+    let path = "M " + pStr(newPoint);
+    
+    while (oldTheta < endTheta - thetaStep) {
+        oldTheta = newTheta;
+        newTheta += thetaStep;
+
+        oldR = newR;
+        newR = a + b * newTheta;
+
+        oldPoint.x = newPoint.x;
+        oldPoint.y = newPoint.y;
+        newPoint.x = center.x + newR * Math.cos(newTheta);
+        newPoint.y = center.y + newR * Math.sin(newTheta);
+
+        // Slope calculation with the formula:
+        // (b * sinΘ + (a + bΘ) * cosΘ) / (b * cosΘ - (a + bΘ) * sinΘ)
+        const aPlusBTheta = a + b * newTheta;
+
+        oldSlope = newSlope;
+        newSlope = (b * Math.sin(newTheta) + aPlusBTheta * Math.cos(newTheta)) /
+                   (b * Math.cos(newTheta) - aPlusBTheta * Math.sin(newTheta));
+
+        const oldIntercept = -(oldSlope * oldR * Math.cos(oldTheta) - oldR * Math.sin(oldTheta));
+        const newIntercept = -(newSlope * newR* Math.cos(newTheta) - newR * Math.sin(newTheta));
+
+        const controlPoint = lineIntersection(oldSlope, oldIntercept, newSlope, newIntercept);
+
+        // Offset the control point by the center offset.
+        controlPoint.x += center.x;
+        controlPoint.y += center.y;
+
+        path += "Q " + pStr(controlPoint) + pStr(newPoint);
+    }
+    
+    return path;
+}
+
+const path1 = getPath({ x: 200, y: 200 }, 30, 83, 5, 2 * 360, 10);
+const path1b = getPath({ x: 200, y: 200 }, 30, 83, 645, 2.5 * 360, 10);
+const pathYears = getPath({ x: 200, y: 200 }, 30, 83, 5, 1.76 * 360, 10);
+
+
+class buildValue {
+  constructor (params = {}) {
+    this.x = 0
+    this.params = {...{
+        container: params.container,
+        parentClass: undefined,
+        letterSpacing: 0,
+        class: undefined,
+        splitWords: true,
+        path: undefined,
+        wordSpacing: 5,
+        content: [],
+        rotate: 0,
+      }, ...params
+    }
+    this.init()
+  }
+
+  init () { 
+    this.params.container.setAttribute("style", "--path: path('" + this.params.path + "'); " + (this.params.rotate ? 'transform: rotate(' + this.params.rotate + 'deg);' : '') + "")
+    let n = 0
+
+    this.params.content.forEach((v, k) => {
+      let div = document.createElement('div')
+      if (v.id) div.setAttribute('id', v.id)
+      if (this.params.parentClass) div.className = this.params.parentClass
+      document.body.appendChild(div)
+
+      if (this.params.splitWords) {
+        let charts = typeof v == 'string' ? v.split('') : v.label.split('')
+        charts.forEach((chart, i) => {
+          n++
+          let divChart = document.createElement('span')
+          divChart.innerHTML = chart
+          div.appendChild(divChart)
+          divChart.className = 'onpath' + (this.params.class ? ' ' + this.params.class : '')
+          divChart.style.cssText = 'offset-path: none;'
+          let chartWidth = divChart.getBoundingClientRect().width * .5
+
+          this.x += chartWidth
+          divChart.style.cssText = '--offsetDistance: ' + this.x + 'px; --chartId: ' + n + ';'
+          this.x += chartWidth + this.params.letterSpacing
+        })
+        this.x += this.params.wordSpacing
+        n++
+      } else {
+        div.style.cssText = '--offsetDistance: ' + (80 / (this.params.content.length - 1) * k) + '%;'
+        div.innerHTML = ++k
+      }
+      this.params.container.appendChild(div)
+    })
+
+  }
+}
+
+// function createArray (min, max) {
+//   while
+// }
+
+/* LOAD::INIT */
+window.addEventListener('load', function () {
+  new buildValue({
+    container: document.querySelector('.container .spiral-day'),
+    splitWords: false,
+    wordSpacing: 15,
+    parentClass: 'onpath day',
+    path: path1,
+    content: [ ...Array(31).keys() ]
+  })
+
+  new buildValue({
+    container: document.querySelector('.container .spiral-month'),
+    parentClass: 'months',
+    class: 'month',
+    wordSpacing: 15,
+    path: path1,
+    rotate: 180,
+    content: [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aôut', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ]
+  })
+
+  new buildValue({
+    container: document.querySelector('.container .spiral-year'),
+    splitWords: true,
+    parentClass: 'months',
+    letterSpacing: -8,
+    class: 'month',
+    wordSpacing: 15,
+    path: pathYears,
+    content: Array.from({length: 38}, (_, i) => String(i + 1985))
+  })
+
+  new buildValue({
+    container: document.querySelector('.container .spiral-value'),
+    class: 'value',
+    path: path1b,
+    content: [
+      {
+        id: 'day',
+        label: '14',
+        class: undefined,
+      },
+      {
+        id: 'month',
+        label: 'Janvier',
+        class: undefined,
+      },
+      {
+        id: 'year',
+        label: '2023',
+        class: undefined,
+      }
+    ]
+  })
+})
+
+
+
+
+// class datePicker {
+//   constructor (input, params = {}) {
+//     this.input = input
+//     this.params = { ...{
+//       width: 400,
+//       height: 400,
+//     }, ...params }
+//   }
+
+//   addCss () {
+//   }
+
+//   getPath (center, startRadius, spacePerLoop, startTheta, endTheta, thetaStep) {
+//     const a = startRadius;
+//     const b = spacePerLoop / Math.PI / 2;
+
+//     let oldTheta = newTheta = startTheta * Math.PI / 180;
+//     endTheta = endTheta * Math.PI / 180;
+//     thetaStep = thetaStep * Math.PI / 180;
+
+//     let oldR, newR = a + b * newTheta;
+
+//     const oldPoint = { x: 0, y: 0 };
+//     const newPoint = { x: center.x + newR * Math.cos(newTheta), y: center.y + newR * Math.sin(newTheta) };
+
+//     let oldslope, newSlope = (b * Math.sin(oldTheta) + (a + b * newTheta) * Math.cos(oldTheta)) / (b * Math.cos(oldTheta) - (a + b * newTheta) * Math.sin(oldTheta));
+
+//     let path = "M " + pStr(newPoint);
+    
+//     while (oldTheta < endTheta - thetaStep) {
+//         oldTheta = newTheta;
+//         newTheta += thetaStep;
+
+//         oldR = newR;
+//         newR = a + b * newTheta;
+
+//         oldPoint.x = newPoint.x;
+//         oldPoint.y = newPoint.y;
+//         newPoint.x = center.x + newR * Math.cos(newTheta);
+//         newPoint.y = center.y + newR * Math.sin(newTheta);
+
+//         const aPlusBTheta = a + b * newTheta;
+
+//         oldSlope = newSlope;
+//         newSlope = (b * Math.sin(newTheta) + aPlusBTheta * Math.cos(newTheta)) / (b * Math.cos(newTheta) - aPlusBTheta * Math.sin(newTheta));
+
+//         const oldIntercept = -(oldSlope * oldR * Math.cos(oldTheta) - oldR * Math.sin(oldTheta));
+//         const newIntercept = -(newSlope * newR* Math.cos(newTheta) - newR * Math.sin(newTheta));
+//         const controlPoint = lineIntersection(oldSlope, oldIntercept, newSlope, newIntercept);
+
+//         controlPoint.x += center.x;
+//         controlPoint.y += center.y;
+
+//         path += 'Q ' + pStr(controlPoint) + pStr(newPoint);
+//     }
+    
+//     return path;
+//   }
+
+//   buildPanel () {}
+// }
+
+
+
+</script>
+
+
+</body>
+</html>

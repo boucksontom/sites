@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="description" content="Points Along an Archimedean Spiral" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <!-- <script type="text/javascript" src="http://d3js.org/d3.v2.js"></script> -->
+    <!-- <link href="index.css" rel="stylesheet" type="text/css"> -->
+
+
+<style type="text/css">
+  
+svg {
+  background: white;
+}
+
+.spiral {
+  fill: none;
+  stroke: #303030;
+  stroke-width: 3px;
+}
+
+
+#chart div {
+  position: absolute;
+  line-height: 40px;
+  height: 40px;
+  width: 40px;
+  margin: -20px;
+/*  background: grey;*/
+/*  border-radius: 5px;*/
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+}
+#chart div:before {
+  position: absolute;
+  content: '';
+  height: 100%;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+/*  transform: skewX(10deg);*/
+/*  transform:skew(10deg,10deg);*/
+  background: blue;
+  border-radius: 15px;
+  z-index: -1;
+  transform: perspective(200px) rotateX(-57deg) scaleY(1.6);
+  /*width:1px;
+  height:10px;
+  border:1px solid #069;
+  border-color:transparent transparent transparent #069;
+  border-width:10px;
+  border-radius: 10px;*/
+}
+#chart div:hover:before {
+  background: red;
+}
+#chart div:hover {
+}
+
+</style>
+  </head>
+  <body>
+    <div id="chart"></div>
+    <!-- <script type="text/javascript" src="index.js"></script> -->
+<script type="text/javascript">
+
+
+let angle = (x1, y1, x2, y2, x3, y3) => {
+    "use strict";
+    let angle_simple = (x1, y1, x2, y2) => {
+        if (y1 != y2) return Math.atan((x2 - x1) / (y2 - y1)) * 180 / Math.PI;
+        if (x1 > x2) return 90;
+        if (x2 > x1) return -90;
+        return undefined;
+    };
+    // return angle_simple(x3, y3, x2, y2) - angle_simple(x1, y1, x2, y2);
+    return angle_simple(x3, y3, x2, y2) - angle_simple(x1, y1, x2, y2);
+}
+
+function find_angle(A,B,C) {
+    var AB = Math.sqrt(Math.pow(B.x-A.x,2)+ Math.pow(B.y-A.y,2));    
+    var BC = Math.sqrt(Math.pow(B.x-C.x,2)+ Math.pow(B.y-C.y,2)); 
+    var AC = Math.sqrt(Math.pow(C.x-A.x,2)+ Math.pow(C.y-A.y,2));
+    return Math.acos((BC*BC+AB*AB-AC*AC)/(2*BC*AB));
+}
+
+var nodesCount = 31;
+var width = 960,
+    height = 500;
+
+var centerX = width/2,
+    centerY = height/2,
+    radius = 610,
+    coils = 16;
+
+var placeholderR=22;
+var textArea={width: 30, height: 15}; 
+var iconArea={width: 15, height: 15};
+var direction = 1; //RTL = -1, LTR =1
+var textIconGap = 5;
+
+var rotation = - 2*Math.PI;
+var thetaMax = coils * 2 * Math.PI;
+var awayStep = radius / thetaMax;
+var chord = placeholderR*2;
+
+var initialAdjustment = chord / awayStep;
+var a_time = [];
+
+for ( theta = chord / awayStep; theta <= thetaMax; ) {
+    if (a_time.length == nodesCount) break;
+    away = awayStep * theta;
+    around = theta + rotation;
+    around*= direction;
+    theta += chord / away;  
+    a_time.push({around: around, away: away});
+}
+// console.log("around=" + around + " theta=" + theta + " away=" + away);
+// console.log(a_time);
+
+fmod = function (a,b) { 
+  return Number((a - (Math.floor(a / b) * b)).toPrecision(8)); 
+};
+var finalAngle = fmod(around, 2*Math.PI);
+// console.log( "finalAngle= " + finalAngle );
+var adjustAngle = finalAngle-initialAdjustment;
+//var adjustAngle = 0;
+
+var new_time = [];
+
+for (var i = 0; i < a_time.length; i++) {
+    x = centerX + Math.cos ( a_time[i].around + adjustAngle) * a_time[i].away;
+    y = centerY + Math.sin ( a_time[i].around + adjustAngle) * a_time[i].away;
+    xArc = centerX + Math.cos ( a_time[i].around + adjustAngle) * (a_time[i].away-placeholderR);
+    yArc = centerY + Math.sin ( a_time[i].around + adjustAngle) * (a_time[i].away-placeholderR);
+    
+
+    c = (find_angle({ x: centerX, y: centerY-100 }, { x: centerX, y: centerY }, { x: x, y: y }) * 180) / Math.PI
+    if (xArc > x) c = c * -1
+
+    // if (xArc > x && yArc > y) {
+    // // if (xArc > x) {
+    //   c = (find_angle({ x: centerX, y: centerY-100 }, { x: centerX, y: centerY }, { x: x, y: y }) * 180) / Math.PI
+    // } else {
+    //   c = (find_angle({ x: centerX-100, y: centerY }, { x: centerX, y: centerY }, { x: x, y: y }) * 180) / Math.PI
+    // }
+
+    new_time.push({x: x, y: y, xArc: xArc, yArc: yArc, c: c });
+}
+
+
+new_time.forEach((a, i) => {
+      var b = document.createElement('div')
+      b.style.cssText = 'left: ' + a.x + 'px; top: ' + a.y + 'px; transform: rotate(' + (a.c) + 'deg);'
+      b.innerHTML = ++i
+      document.querySelector('#chart').appendChild(b)
+})
+
+
+// var svg = d3.select("#chart").append("svg")
+//     .attr("width", width)
+//     .attr("height", height)
+//   .append("g");
+
+// var lineFunction = d3.svg.line()
+//                     .x(function(d) { return d.xArc; })
+//                     .y(function(d) { return d.yArc; })
+//                     .interpolate("cardinal");
+
+// svg.append("path")
+//   .attr("d", lineFunction(new_time))
+//   .attr("stroke", "gray")
+//   .attr("stroke-width", 0.5)
+//   .attr("fill", "none");
+
+// svg.append("circle")
+//   .attr("class", "node-placeholder")
+//   .attr("cx", centerX)
+//   .attr("cy", centerY)
+//   .attr("r", 0.5)
+//   .attr("fill", "red");
+
+
+// var node = svg.selectAll("circle")
+//                 .data(new_time)
+//               .enter()
+//                 .append("g");
+
+// node.append("circle")
+//     .attr("class", "node-placeholder")
+//     .attr("cx", function (d) { return d.x; })
+//     .attr("cy", function (d) { return d.y; })
+//     .attr("fill", "lightgrey")
+//     .attr("r", placeholderR)
+// node.append("circle")
+//     .attr("class", "TL-dot")
+//     .attr("cx", function (d) { return d.xArc; })
+//     .attr("cy", function (d) { return d.yArc; })
+//     .attr("fill", "black")
+//     .attr("r", 2)
+// node.append("rect")
+//     .attr("class", "text-placeholder")
+//     .attr("x", function (d) { return d.x - textArea.width/2; })
+//     .attr("y", function (d) { return d.y; })
+//     .attr("width", textArea.width)
+//     .attr("height", textArea.height)
+//     .attr("fill", "#919191");
+// node.append("rect")
+//     .attr("class", "icon-placeholder")
+//     .attr("x", function (d) { return d.x - iconArea.width/2; })
+//     .attr("y", function (d) { return d.y - iconArea.height-textIconGap; })
+//     .attr("width", iconArea.width)
+//     .attr("height", iconArea.height)
+//     .attr("fill", "#919191");
+
+</script>
+  </body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>TEST</title>
+<meta name="description" content="description"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- <link id="favicon" rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png" /> -->
+<!-- <link href="assets/css/css.css" rel="stylesheet" type="text/css" /> -->
+
+
+<style type="text/css">
+
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+/*  margin: 0;*/
+/*  padding: 2rem;*/
+/*  min-height: 100vh;*/
+/*  background-color: #1b1b24;*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+  font-family: Alfa Slab One;
+  --path: path('M 400,400 Q 404.576353093878,400 407.2168783648703,404.1666666666667 Q 410.03674878481513,408.61633439459115 408.3333333333333,414.43375672974065 Q 406.4398592040217,420.9002582994564 400,425 Q 392.7648941678627,429.60601142791063 383.33333333333337,428.8675134594813 Q 372.78728762267997,428.0417505270335 363.9156081756484,420.83333333333337 Q 354.09030741564277,412.85007972790714 350,400 Q 345.51532575535674,385.9109803392854 349.48185144590775,370.83333333333337 Q 353.7913147196502,354.4521042437576 366.66666666666663,342.26497308103745 Q 380.5449908098856,329.12848117400665 400,325 Q 420.8291562660865,320.5799157597584 441.6666666666667,327.8312163512968 Q 463.8474207126551,335.54995586683725 479.38566201357355,354.1666666666667 Q 495.84374116465295,373.88545555291194 500,400.00000000000006 Q 504.3834990127326,427.54233659083786 493.81941874331415,454.16666666666674 Q 482.7191415416672,482.14235755623565 458.33333333333326,501.0362971081846 Q 432.7931365688709,520.8246481724614 399.99999999999983,525 Q 365.7529865865172,529.3604651767121 333.33333333333326,515.4700538379251 Q 299.5625150552575,501.0007270543689 277.3130677972045,470.8333333333333 Q 254.18895929834338,439.48001127358634 250,400.00000000000006 Q 245.65523904476873,359.05159270432523 262.87931106746385,320.8333333333335 Q 280.7111659460472,281.266472841946 316.66666666666646,255.66243270259372 Q 353.82891900295,229.19906043918684 399.9999999999996,225.00000000000003 Q 447.64835363513504,220.6665879935871 491.6666666666662,241.2286759728527 Q 537.0304567229554,262.4192709314143 565.988202392017,304.1666666666662 Q 595.7931752414474,347.1354809743694 600,399.9999999999992 Q 604.3248448131449,454.3476027715633 580.4219591217584,504.1666666666658 Q 555.8750031592906,555.3281198616304 508.3333333333343,587.6388374866277 Q 459.559405565978,620.7870338651372 400.0000000000013,624.9999999999999 Q 338.9535037306139,629.3181562843176 283.3333333333347,602.0725942163697 Q 226.37363254652075,574.1708626669317 190.71052741876164,520.8333333333347 Q 154.2179391978425,466.25523398614393 150.0000000000001,400.00000000000193 Q 145.68720647119508,332.2547976672927 176.27677068901906,270.8333333333353 Q 207.53217124444367,208.07492145181067 266.6666666666647,169.05989232415104 Q 327.04829491014533,129.22204526255803 399.9999999999974,125.00000000000017 Q 474.44380876230457,120.69159994650528 541.6666666666641,154.62613559440777 Q 610.2241594911193,189.2344036256814 652.5907427704595,254.166666666664 Q 695.7745088306326,320.35136790705815 699.9999999999998,399.9999999999966 Q 704.3047360761677,481.14236339517174 667.0244995002035,554.1666666666633 ');
+}
+
+.wrapper {
+  height: 400px;
+  width: 400px;
+  position: relative;
+/*  background-color: rgba(0,0,0,.05);*/
+}
+
+.spirales {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+.spirale2 {
+  transform: rotate(180deg);
+}
+
+.day {
+  position: absolute;
+  display: flex;
+  height: 40px;
+  width: 40px;
+  height: 34px;
+  width: 34px;
+  left: 0;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+  offset-path: var(--path);
+  border-radius: 10px;
+  background-color: #1b6988;
+  offset-distance: 0%;
+  transform: scale(1) rotate(0deg);
+  opacity: 1;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 1s;
+/*  transition: transform 1s, opacity 1s, offset-distance 1s, background .1s;*/
+  transition: all 1s, background .1s;
+/*  transition-timing-function: ease;*/
+  pointer-events: all;
+/*  transition-timing-function: ;*/
+}
+
+.spirale2 .day {
+  background-color: #39dc47;
+  background-color: #9ace3b;
+  background-color: #000;
+  background-color: #dfdfdf;
+  color: #000;
+}
+.day:hover,
+.month:hover {
+  background-color: red;
+}
+.wrapper {
+  transform: scale(1) rotate(0deg);
+  transition: 1s;
+}
+#test:checked ~ .wrapper {
+/*  transform: scale(.5) rotate(500deg);*/
+  transform: scale(0) rotate(440deg);
+}
+#test:checked ~ .wrapper .spirales .day {
+/*  opacity: .5;*/
+
+  offset-distance: 0% !important;
+  transform: scale(0) rotate(180deg);
+
+/*  animation-duration: 1s;*/
+/*  animation-name: slidein;*/
+/*  animation: slidein 1s ease;*/
+/*  animation: slidein 1s ease;*/
+/*  transform: scale(0) rotate(-360deg);*/
+}
+
+@keyframes slidein {
+  /*from {
+    margin-left: 100%;
+    width: 300%;
+  }*/
+
+  to {
+    offset-distance: 0% !important;
+    transform: scale(0) rotate(180deg);
+  }
+}
+
+
+
+
+#test ~ .wrapper.testAnim .spirale1 .day {
+  opacity: 0;
+/*  offset-distance: -10% !important;*/
+animation: testA 1s linear forwards;
+
+/*  transform: scale(0) rotate(180deg);*/
+/*  transform: scale(0) rotate(-360deg);*/
+}
+
+@keyframes testA {
+  from {
+    opacity: 1;
+  } 
+  to {
+    opacity: 0;
+    offset-distance: -10% !important;
+  }
+}
+
+.month {
+  width: auto;
+}
+
+svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+/*  display: none;*/
+/*  width: 360px;*/
+/*  width: 400px;*/
+/*  background-color: rgba(0,0,0,.05);*/
+  pointer-events: none;
+}
+
+svg path {
+  stroke: transparent;
+/*  stroke: red;*/
+  fill: transparent;
+  stroke-width: 1px;
+}
+svg text {
+/*  font-size: 34px;*/
+  font-size: 28px;
+/*  text-rendering: geometricPrecision;*/
+/*  background-color: red;*/
+}
+
+#svg1 {
+  z-index: -1;
+}
+#svg1 path {
+/*  stroke: blue;*/
+/*  stroke-width: 36px;*/
+}
+
+
+#svg3 textPath {}
+
+
+.testspan {
+  cursor: pointer;
+  pointer-events: all;
+  font-size: 23px;
+}
+.testspan:hover {
+  fill: red;
+}
+
+</style>
+
+
+</head>
+
+<body>
+
+
+<label for="test">TEST</label>
+<input type="checkbox" id="test" name="">
+
+<div class="wrapper">
+  <div class="spirales spirale1"></div>
+  <div class="spirales spirale2"></div>
+
+
+  <svg id="svg1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+    <path id="text" d="" stroke-miterlimit="10"/>
+
+    <!-- <text x="296%" dy="10"> -->
+    <text dy="10">
+        <textPath xlink:href="#text" startOffset="82%">Janvier 2023</textPath>
+    </text>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" style="transform: rotate(180deg);">
+    <path id="text2" d="" stroke-miterlimit="10"/>
+
+    <!-- <text x="296%" dy="10"> -->
+    <text dy="10">
+        <textPath xlink:href="#text2" startOffset="82%">Mars 2023</textPath>
+    </text>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" style="transform: rotate(70deg);">
+    <path id="text3" d="" stroke-miterlimit="10"/>
+    <!-- <path id="text3" d="" stroke-miterlimit="10"/> -->
+
+    <text x="296%" dy="-10">
+        <!-- <textPath xlink:href="#text3">Du 14 Janvier au 14 Mars 2023</textPath> -->
+    </text>
+  </svg>
+
+  <svg id="svg3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" style="transform: rotate(0deg);">
+    <path id="text3" d="" stroke-miterlimit="10"/>
+    
+    <text dy="8">
+        <textPath xlink:href="#text3" startOffset="100%">
+        <!-- <textPath xlink:href="#text3"> -->
+          <tspan dx="-5" class="testspan" onClick="clickTspan(this)">Janvier</tspan>
+          <tspan dx="5" class="testspan" onClick="clickTspan(this)">Février</tspan>
+          <tspan dx="5" class="testspan" onClick="clickTspan(this)">Mars</tspan>
+          <tspan dx="5" class="testspan" onClick="clickTspan(this)">Avril</tspan>
+          <tspan dx="5" class="testspan" onClick="clickTspan(this)">Mai</tspan>
+          <tspan dx="5" class="testspan" onClick="clickTspan(this)">Juin</tspan>
+          <tspan dx="5" class="testspan" onClick="clickTspan(this)">Juillet</tspan>
+          <tspan dx="5" class="testspan" onClick="clickTspan(this)">Aôut</tspan>
+          <tspan dx="5" class="testspan" onClick="clickTspan(this)">Septembre</tspan>
+          <tspan dx="5" class="testspan" onClick="clickTspan(this)">Octobre</tspan>
+          <tspan dx="5" class="testspan" onClick="clickTspan(this)">Novembre</tspan>
+          <tspan dx="5" class="testspan" onClick="clickTspan(this)">Décembre</tspan>
+
+          <animate id="animTestShow" attributeName="startOffset" from="100%" to="0%" dur="1s" fill="freeze" calcMode="spline" keySplines="0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1" begin="indefinite" />
+          <animate id="animTestHide" attributeName="startOffset" from="0%" to="100%" dur="1s" fill="freeze" calcMode="spline" keySplines="0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1" begin="indefinite" />
+          <!-- document.querySelector('#animTest').beginElement() -->
+        </textPath>
+        <!-- <textPath xlink:href="#text3"></textPath> -->
+    </text>
+  </svg>
+
+</div>
+
+
+<br><br>
+
+<div>
+  Du 14 Janvier au 14 Mars 2023
+</div>
+
+<br><br>
+
+<input type="date">
+
+
+<script type="text/javascript">
+
+function lineIntersection (m1, b1, m2, b2) {
+    if (m1 === m2) {
+        throw new Error("parallel slopes");
+    }
+    const x = (b2 - b1) / (m1 - m2);
+    return {x: x, y: m1 * x + b1};
+}
+
+function pStr (point) {
+  return `${point.x},${point.y} `;
+}
+
+function getPath (center, startRadius, spacePerLoop, startTheta, endTheta, thetaStep) {
+    // Rename spiral parameters for the formula r = a + bθ
+    const a = startRadius;  // start distance from center
+    const b = spacePerLoop / Math.PI / 2; // space between each loop
+
+    // convert angles to radians
+    let oldTheta = newTheta = startTheta * Math.PI / 180;
+    endTheta = endTheta * Math.PI / 180;
+    thetaStep = thetaStep * Math.PI / 180;
+
+    // radii
+    let oldR,
+        newR = a + b * newTheta;
+
+    // start and end points
+    const oldPoint = {x: 0, y: 0};
+    const newPoint = {
+        x: center.x + newR * Math.cos(newTheta), 
+        y: center.y + newR * Math.sin(newTheta)
+    };
+
+    // slopes of tangents
+    let oldslope,
+        newSlope = (b * Math.sin(oldTheta) + (a + b * newTheta) * Math.cos(oldTheta)) /
+                   (b * Math.cos(oldTheta) - (a + b * newTheta) * Math.sin(oldTheta));
+
+    let path = "M " + pStr(newPoint);
+    
+    while (oldTheta < endTheta - thetaStep) {
+        oldTheta = newTheta;
+        newTheta += thetaStep;
+
+        oldR = newR;
+        newR = a + b * newTheta;
+
+        oldPoint.x = newPoint.x;
+        oldPoint.y = newPoint.y;
+        newPoint.x = center.x + newR * Math.cos(newTheta);
+        newPoint.y = center.y + newR * Math.sin(newTheta);
+
+        // Slope calculation with the formula:
+        // (b * sinΘ + (a + bΘ) * cosΘ) / (b * cosΘ - (a + bΘ) * sinΘ)
+        const aPlusBTheta = a + b * newTheta;
+
+        oldSlope = newSlope;
+        newSlope = (b * Math.sin(newTheta) + aPlusBTheta * Math.cos(newTheta)) /
+                   (b * Math.cos(newTheta) - aPlusBTheta * Math.sin(newTheta));
+
+        const oldIntercept = -(oldSlope * oldR * Math.cos(oldTheta) - oldR * Math.sin(oldTheta));
+        const newIntercept = -(newSlope * newR* Math.cos(newTheta) - newR * Math.sin(newTheta));
+
+        const controlPoint = lineIntersection(oldSlope, oldIntercept, newSlope, newIntercept);
+
+        // Offset the control point by the center offset.
+        controlPoint.x += center.x;
+        controlPoint.y += center.y;
+
+        path += "Q " + pStr(controlPoint) + pStr(newPoint);
+    }
+    
+    return path;
+}
+
+
+// getPath(center, startRadius, spacePerLoop, startTheta, endTheta, thetaStep)
+// const path = getPath({ x: 400, y: 400 }, 0, 50, 0, 6 * 360, 30);
+// const path = getPath({ x: 180, y: 180 }, 30, 45, 90, 2.8 * 360, 10);
+const path = getPath({ x: 180, y: 180 }, 30, 43, 200, 2.8 * 360, 10);
+
+// const path1 = getPath({ x: 180, y: 180 }, 30, 83, 5, 1.8 * 360, 10);
+const path1 = getPath({ x: 200, y: 200 }, 30, 83, 5, 2 * 360, 10);
+const path1b = getPath({ x: 200, y: 200 }, 30, 83, 5, 1.77 * 360, 10);
+
+// const path2 = getPath({ x: 180, y: 180 }, 30, 43, 200, 2.8 * 360, 10);
+
+// const spiral = document.querySelector('#spiral-test');
+const spiral = document.querySelector('.wrapper #text');
+const spiral2 = document.querySelector('.wrapper #text2');
+const spiral3 = document.querySelector('.wrapper #text3');
+// const cssspiral = document.querySelector('body');
+
+spiral.setAttribute("d", path1);
+spiral2.setAttribute("d", path1);
+spiral3.setAttribute("d", path1b);
+
+
+document.body.setAttribute("style", "--path: path('" + path1 + "')");
+
+const build = function () {
+	const n = 31
+	const a = [ ...Array(n).keys() ]
+  a.forEach((v, k) => {
+    let div = document.createElement('div')
+    div.classList.add('day')
+    div.style.cssText = 'offset-distance: ' + (80 / (n - 1) * k) + '%;'
+    div.innerHTML = ++k
+    document.querySelector('.wrapper .spirale1').appendChild(div)
+  })
+
+  a.forEach((v, k) => {
+    let div = document.createElement('div')
+    div.classList.add('day')
+    div.style.cssText = 'offset-distance: ' + (80 / (n - 1) * k) + '%;'
+    div.innerHTML = ++k
+    document.querySelector('.wrapper .spirale2').appendChild(div)
+  })
+}
+
+
+const buildMonth = function () {
+  const m = [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aôut', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ]
+  m.forEach((v, k) => {
+    let div = document.createElement('div')
+    div.classList.add('month')
+    div.style.cssText = 'offset-distance: ' + (100 / 11 * k) + '%;'
+    div.innerHTML = v
+    document.querySelector('.wrapper').appendChild(div)
+  })
+}
+
+build();
+
+
+
+
+
+const testAnimShow = function () {
+  document.querySelector('#animTestShow').beginElement()
+  document.querySelector('.wrapper').classList.add('testAnim')
+}
+const testAnimHide = function () {
+  document.querySelector('#animTestHide').beginElement()
+  document.querySelector('.wrapper').classList.remove('testAnim')
+}
+
+
+
+</script>
+
+
+</body>
+</html>
