@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="fr" data-theme="auto">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Index des projets</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --background: #f4f6fb;
+        --surface: #ffffff;
+        --surface-muted: #f7f9fc;
+        --text: #182033;
+        --muted: #68728a;
+        --border: #e1e6f0;
+        --accent: #4c5ee8;
+        --accent-strong: #293bc4;
+        --accent-soft: #eef0ff;
+        --shadow: 0 18px 42px rgb(24 32 51 / 0.08);
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+        --background: #111522;
+        --surface: #1b2131;
+        --surface-muted: #151b2a;
+        --text: #edf0fa;
+        --muted: #a2abc0;
+        --border: #30394e;
+        --accent: #a8afff;
+        --accent-strong: #c2c8ff;
+        --accent-soft: #292e4b;
+        --shadow: 0 18px 42px rgb(5 8 16 / 0.42);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root[data-theme="auto"] {
+          color-scheme: dark;
+          --background: #111522;
+          --surface: #1b2131;
+          --surface-muted: #151b2a;
+          --text: #edf0fa;
+          --muted: #a2abc0;
+          --border: #30394e;
+          --accent: #a8afff;
+          --accent-strong: #c2c8ff;
+          --accent-soft: #292e4b;
+          --shadow: 0 18px 42px rgb(5 8 16 / 0.42);
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        padding: 48px 24px 56px;
+        background: radial-gradient(circle at top, rgb(76 94 232 / 0.08), transparent 32%), var(--background);
+        color: var(--text);
+        transition: background-color 160ms ease, color 160ms ease;
+      }
+
+      a,
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 3px solid var(--accent-strong);
+        outline-offset: 3px;
+      }
+
+      .page {
+        width: min(100%, 1120px);
+        margin: 0 auto;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 44px;
+      }
+
+      .theme-picker {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      select {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      select {
+        padding: 8px 32px 8px 12px;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--accent);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(34px, 6vw, 52px);
+        letter-spacing: -0.045em;
+        line-height: 1.08;
+      }
+
+      .result-summary {
+        margin: 22px 0 28px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .project-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 18px;
+      }
+
+      .project-card {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 22px;
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .project-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .project-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 52px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .project-title {
+        margin: 0;
+        font-size: 26px;
+        line-height: 1.15;
+      }
+
+      .project-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .meta-pill,
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--surface-muted);
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 650;
+      }
+
+      .project-description {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .project-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .button-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 16px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--surface);
+        color: var(--text);
+        text-decoration: none;
+        transition: transform 140ms ease, border-color 140ms ease;
+      }
+
+      .button-link:hover {
+        transform: translateY(-1px);
+        border-color: var(--accent);
+      }
+
+      .button-link.primary {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: #ffffff;
+      }
+
+      .button-link.primary:hover {
+        border-color: var(--accent-strong);
+        background: var(--accent-strong);
+      }
+
+      .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .entry-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid var(--border);
+      }
+
+      .entry-item + .entry-item {
+        border-top: 1px solid var(--border);
+      }
+
+      .entry-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 0;
+        text-decoration: none;
+      }
+
+      .entry-link:hover .entry-name {
+        color: var(--accent);
+      }
+
+      .entry-name {
+        font-weight: 650;
+        transition: color 140ms ease;
+      }
+
+      .entry-type {
+        color: var(--muted);
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .viewer {
+        width: min(96vw, 1100px);
+        height: min(90vh, 900px);
+        padding: 0;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: var(--surface);
+        color: var(--text);
+        overflow: hidden;
+      }
+
+      .viewer[open] {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .viewer::backdrop {
+        background: rgb(10 14 25 / 0.6);
+      }
+
+      .viewer-bar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .viewer-title {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        font-size: 14px;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .viewer-action {
+        min-height: 38px;
+        padding: 0 12px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--surface);
+        color: var(--text);
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .viewer-frame {
+        flex: 1;
+        width: 100%;
+        border: 0;
+        background: #ffffff;
+      }
+
+      @media (max-width: 720px) {
+        body {
+          padding: 28px 16px 40px;
+        }
+
+        .topbar {
+          margin-bottom: 34px;
+        }
+
+        .project-card {
+          padding: 18px;
+        }
+
+        .viewer {
+          width: 100vw;
+          height: 100vh;
+          border-radius: 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="topbar">
+        <label class="theme-picker" for="theme">
+          Thème
+          <select id="theme" name="theme">
+            <option value="auto">Auto</option>
+            <option value="light">Clair</option>
+            <option value="dark">Sombre</option>
+          </select>
+        </label>
+      </div>
+
+      <header>
+        <p class="eyebrow">Bibliothèque du dossier</p>
+        <h1>/sites</h1>
+      </header>
+
+      <section aria-label="Entrées disponibles">
+        <p class="result-summary" id="result-summary" aria-live="polite"></p>
+        <div class="project-list" id="project-list"></div>
+      </section>
+    </main>
+
+    <dialog class="viewer" id="viewer" aria-labelledby="viewer-title">
+      <div class="viewer-bar">
+        <span class="viewer-title" id="viewer-title"></span>
+        <a class="viewer-action" id="viewer-external" href="#" target="_blank" rel="noopener">Nouvel onglet</a>
+        <button class="viewer-action" id="viewer-close" type="button">Fermer</button>
+      </div>
+      <iframe class="viewer-frame" id="viewer-frame" title="Aperçu du fichier"></iframe>
+    </dialog>
+
+    <script>
+      const THEME_STORAGE_KEY = 'sites-theme';
+      const catalog = [
+        {
+          name: 'datepicker',
+          kind: 'Dossier',
+          badge: 'DIR',
+          href: 'datepicker/index.html',
+          description: 'Index des démos et expérimentations autour du sélecteur de date, avec plusieurs variantes HTML.',
+          tags: ['calendrier', 'spirale', 'tests'],
+          entries: [
+            { name: 'index.html', href: 'datepicker/index.html', type: 'Index du dossier' },
+            { name: 'src/datepicker.html', href: 'datepicker/src/datepicker.html', type: 'Démo principale' },
+            { name: 'src/datepicker-test.html', href: 'datepicker/src/datepicker-test.html', type: 'Page de test' },
+            { name: 'src/datepicker-test2.html', href: 'datepicker/src/datepicker-test2.html', type: 'Page de test' },
+            { name: 'src/input_date.html', href: 'datepicker/src/input_date.html', type: 'Champ date' },
+            { name: 'src/test.html', href: 'datepicker/src/test.html', type: 'Prototype' },
+            { name: 'src/test2.html', href: 'datepicker/src/test2.html', type: 'Prototype' }
+          ]
+        },
+        {
+          name: 'lavalamp',
+          kind: 'Démo',
+          badge: 'HTML',
+          href: 'lavalamp/404_lavalamp.html',
+          description: 'Animation visuelle de type lampe à lave, dans une page HTML autonome.',
+          tags: ['animation', 'visuel', '404'],
+          entries: [
+            { name: '404_lavalamp.html', href: 'lavalamp/404_lavalamp.html', type: 'Page web' }
+          ]
+        }
+      ];
+
+      const projectList = document.querySelector('#project-list');
+      const resultSummary = document.querySelector('#result-summary');
+      const themeSelect = document.querySelector('#theme');
+      const viewer = document.querySelector('#viewer');
+      const viewerTitle = document.querySelector('#viewer-title');
+      const viewerExternal = document.querySelector('#viewer-external');
+      const viewerFrame = document.querySelector('#viewer-frame');
+      const viewerClose = document.querySelector('#viewer-close');
+
+      function readStoredTheme() {
+        try {
+          return localStorage.getItem(THEME_STORAGE_KEY);
+        } catch (error) {
+          console.warn('Impossible de lire le thème sauvegardé.', error);
+          return null;
+        }
+      }
+
+      function storeTheme(value) {
+        try {
+          localStorage.setItem(THEME_STORAGE_KEY, value);
+        } catch (error) {
+          console.warn('Impossible de sauvegarder le thème.', error);
+        }
+      }
+
+      function pluralize(count, singular, plural = singular + 's') {
+        return count > 1 ? plural : singular;
+      }
+
+      function createEntryLink(entry) {
+        const item = document.createElement('li');
+        item.className = 'entry-item';
+
+        const link = document.createElement('a');
+        link.className = 'entry-link';
+        link.href = entry.href;
+        link.dataset.preview = 'true';
+        link.dataset.label = entry.name;
+
+        const name = document.createElement('span');
+        name.className = 'entry-name';
+        name.textContent = entry.name;
+
+        const type = document.createElement('span');
+        type.className = 'entry-type';
+        type.textContent = entry.type;
+
+        link.append(name, type);
+        item.append(link);
+        return item;
+      }
+
+      function createProjectCard(project) {
+        const article = document.createElement('article');
+        article.className = 'project-card';
+
+        const header = document.createElement('div');
+        header.className = 'project-header';
+
+        const titleGroup = document.createElement('div');
+
+        const title = document.createElement('h2');
+        title.className = 'project-title';
+        title.textContent = project.name;
+
+        const meta = document.createElement('div');
+        meta.className = 'project-meta';
+
+        const typePill = document.createElement('span');
+        typePill.className = 'meta-pill';
+        typePill.textContent = project.kind;
+
+        const countPill = document.createElement('span');
+        countPill.className = 'meta-pill';
+        countPill.textContent = `${project.entries.length} ${pluralize(project.entries.length, 'entrée')}`;
+
+        meta.append(typePill, countPill);
+        titleGroup.append(title, meta);
+
+        const badge = document.createElement('span');
+        badge.className = 'project-badge';
+        badge.textContent = project.badge;
+
+        header.append(titleGroup, badge);
+
+        const description = document.createElement('p');
+        description.className = 'project-description';
+        description.textContent = project.description;
+
+        const actions = document.createElement('div');
+        actions.className = 'project-actions';
+
+        const openButton = document.createElement('a');
+        openButton.className = 'button-link primary';
+        openButton.href = project.href;
+        openButton.dataset.preview = 'true';
+        openButton.dataset.label = `${project.name} — aperçu`;
+        openButton.textContent = 'Aperçu rapide';
+
+        const directButton = document.createElement('a');
+        directButton.className = 'button-link';
+        directButton.href = project.href;
+        directButton.textContent = 'Ouvrir la page';
+
+        actions.append(openButton, directButton);
+
+        const tagList = document.createElement('div');
+        tagList.className = 'tag-list';
+        project.tags.forEach((tagLabel) => {
+          const tag = document.createElement('span');
+          tag.className = 'tag';
+          tag.textContent = tagLabel;
+          tagList.append(tag);
+        });
+
+        const entryList = document.createElement('ul');
+        entryList.className = 'entry-list';
+        project.entries.forEach((entry) => {
+          entryList.append(createEntryLink(entry));
+        });
+
+        article.append(header, description, actions, tagList, entryList);
+        return article;
+      }
+
+      function renderProjects() {
+        const totalEntries = catalog.reduce((sum, project) => sum + project.entries.length, 0);
+
+        projectList.replaceChildren(...catalog.map(createProjectCard));
+
+        resultSummary.textContent = `${catalog.length} ${pluralize(catalog.length, 'projet')} · ${totalEntries} ${pluralize(totalEntries, 'lien')} disponible${totalEntries > 1 ? 's' : ''}`;
+      }
+
+      function openPreview(href, label) {
+        viewerTitle.textContent = label;
+        viewerExternal.href = href;
+        viewerFrame.src = href;
+        viewer.showModal();
+      }
+
+      projectList.addEventListener('click', (event) => {
+        const link = event.target.closest('a[data-preview="true"]');
+        if (!link) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+
+        event.preventDefault();
+        openPreview(link.getAttribute('href'), link.dataset.label || link.textContent.trim());
+      });
+
+      viewerClose.addEventListener('click', () => viewer.close());
+      viewer.addEventListener('click', (event) => {
+        if (event.target === viewer) viewer.close();
+      });
+      viewer.addEventListener('close', () => {
+        viewerFrame.removeAttribute('src');
+      });
+
+      const storedTheme = readStoredTheme();
+      if (storedTheme === 'light' || storedTheme === 'dark' || storedTheme === 'auto') {
+        document.documentElement.dataset.theme = storedTheme;
+      }
+      themeSelect.value = document.documentElement.dataset.theme;
+      themeSelect.addEventListener('change', () => {
+        document.documentElement.dataset.theme = themeSelect.value;
+        storeTheme(themeSelect.value);
+      });
+
+      renderProjects();
+    </script>
+  </body>
+</html>
